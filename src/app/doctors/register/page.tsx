@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from 'react'
@@ -11,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Progress } from '@/components/ui/progress'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { CheckCircle2, ChevronRight, ChevronLeft, Loader2, Award, ShieldCheck, CreditCard } from 'lucide-react'
+import { CheckCircle2, ChevronRight, ChevronLeft, Loader2, Award, ShieldCheck, CreditCard, User } from 'lucide-react'
 import { useFirestore, useUser } from '@/firebase'
 import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates'
 import { collection } from 'firebase/firestore'
