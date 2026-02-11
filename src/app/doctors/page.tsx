@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from 'react'
@@ -8,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import { Search, MapPin, Star, Filter, Calendar, MessageSquare, Award } from 'lucide-react'
+import { Search, MapPin, Star, Filter, Calendar, MessageSquare, Award, Stethoscope } from 'lucide-react'
 import { MOCK_DOCTORS, Doctor } from '@/app/lib/mock-data'
 import Link from 'next/link'
 
