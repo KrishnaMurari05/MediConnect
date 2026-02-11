@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Progress } from '@/components/ui/progress'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { CheckCircle2, ChevronRight, ChevronLeft, Loader2, Award, ShieldCheck, CreditCard, User, XCircle, AlertCircle } from 'lucide-react'
@@ -55,7 +55,6 @@ export default function DoctorRegistrationPage() {
   }
 
   const validateLicense = (license: string) => {
-    // Basic verification: Must follow MCI-XXXXX pattern
     const regex = /^MCI-\d{5,8}$/
     return regex.test(license)
   }
@@ -64,7 +63,6 @@ export default function DoctorRegistrationPage() {
     if (!firestore || !user) return
     setIsSubmitting(true)
 
-    // 1. Calculate Score
     let correctCount = 0
     Object.keys(CORRECT_ANSWERS).forEach(qId => {
       if (formData.testAnswers[qId] === CORRECT_ANSWERS[qId]) {
@@ -74,10 +72,8 @@ export default function DoctorRegistrationPage() {
     const scorePercentage = Math.round((correctCount / Object.keys(CORRECT_ANSWERS).length) * 100)
     setFinalScore(scorePercentage)
 
-    // 2. Validate License
     const isLicenseValid = validateLicense(formData.license)
 
-    // Simulate verification delay
     setTimeout(() => {
       setIsSubmitting(false)
       
@@ -93,7 +89,6 @@ export default function DoctorRegistrationPage() {
         return
       }
 
-      // 3. Success Case: Register Specialist
       addDocumentNonBlocking(collection(firestore, 'specialist_registrations'), {
         doctorId: user.uid,
         name: formData.name,
