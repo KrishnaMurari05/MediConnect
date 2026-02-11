@@ -8,33 +8,33 @@
     },
     {
       "id": "doc1",
-      "description": "Female General Practitioner",
+      "description": "Prominent Chest Physician",
       "imageUrl": "https://images.unsplash.com/photo-1693035730007-fbc2c14c6814?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkb2N0b3IlMjBhdmF0YXJ8ZW58MHx8fHwxNzcwODMyODEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "doctor avatar"
+      "imageHint": "doctor specialist"
     },
     {
       "id": "doc2",
-      "description": "Male Cardiologist",
+      "description": "Top Indian Cardiac Surgeon",
       "imageUrl": "https://images.unsplash.com/photo-1642975967602-653d378f3b5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkb2N0b3IlMjBhdmF0YXJ8ZW58MHx8fHwxNzcwODMyODEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "doctor avatar"
+      "imageHint": "cardiac surgeon"
     },
     {
       "id": "doc3",
-      "description": "Female Nutritionist",
+      "description": "Renowned Philanthropic Surgeon",
       "imageUrl": "https://images.unsplash.com/photo-1693035730007-fbc2c14c6814?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkb2N0b3IlMjBhdmF0YXJ8ZW58MHx8fHwxNzcwODMyODEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "doctor avatar"
+      "imageHint": "surgeon hospital"
     },
     {
       "id": "doc4",
-      "description": "Male Dermatologist",
+      "description": "Leading Dermatologist",
       "imageUrl": "https://images.unsplash.com/photo-1642975967602-653d378f3b5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkb2N0b3IlMjBhdmF0YXJ8ZW58MHx8fHwxNzcwODMyODEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "doctor avatar"
+      "imageHint": "skin doctor"
     },
     {
       "id": "blog-header",
       "description": "Stethoscope on a wooden desk with a notebook",
       "imageUrl": "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtZWRpY2FsJTIwYmxvZ3xlbnwwfHx8fDE3NzA4Mzc1NTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "medical blog"
+      "imageHint": "medical office"
     }
   ]
 }
