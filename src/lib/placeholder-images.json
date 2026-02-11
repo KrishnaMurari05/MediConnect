@@ -1,3 +1,34 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "health-hero",
+      "description": "Doctor consulting with a patient",
+      "imageUrl": "https://images.unsplash.com/photo-1698795635777-be9983d39605?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZG9jdG9yJTIwcGF0aWVudHxlbnwwfHx8fDE3NzA4MTE2ODR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "doctor patient"
+    },
+    {
+      "id": "doc1",
+      "description": "Female General Practitioner",
+      "imageUrl": "https://images.unsplash.com/photo-1693035730007-fbc2c14c6814?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkb2N0b3IlMjBhdmF0YXJ8ZW58MHx8fHwxNzcwODMyODEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "doctor avatar"
+    },
+    {
+      "id": "doc2",
+      "description": "Male Cardiologist",
+      "imageUrl": "https://images.unsplash.com/photo-1642975967602-653d378f3b5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkb2N0b3IlMjBhdmF0YXJ8ZW58MHx8fHwxNzcwODMyODEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "doctor avatar"
+    },
+    {
+      "id": "doc3",
+      "description": "Female Nutritionist",
+      "imageUrl": "https://images.unsplash.com/photo-1693035730007-fbc2c14c6814?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkb2N0b3IlMjBhdmF0YXJ8ZW58MHx8fHwxNzcwODMyODEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "doctor avatar"
+    },
+    {
+      "id": "doc4",
+      "description": "Male Dermatologist",
+      "imageUrl": "https://images.unsplash.com/photo-1642975967602-653d378f3b5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkb2N0b3IlMjBhdmF0YXJ8ZW58MHx8fHwxNzcwODMyODEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "doctor avatar"
+    }
+  ]
 }

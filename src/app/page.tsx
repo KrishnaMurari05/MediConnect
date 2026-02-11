@@ -1,10 +1,14 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import Navbar from '@/components/layout/Navbar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { ShieldCheck, Zap, HeartPulse, ArrowRight, Activity, Users, Star } from 'lucide-react'
+import { PlaceHolderImages } from '@/lib/placeholder-images'
 
 export default function Home() {
+  const heroImage = PlaceHolderImages.find(img => img.id === 'health-hero')
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -49,12 +53,17 @@ export default function Home() {
               <div className="hidden lg:block relative">
                 <div className="absolute -top-20 -right-20 w-96 h-96 bg-accent/20 rounded-full blur-[100px]" />
                 <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-[100px]" />
-                <img 
-                  src="https://picsum.photos/seed/health-hero/800/600" 
-                  alt="Healthy Living" 
-                  className="rounded-3xl shadow-2xl relative z-10 border-8 border-white"
-                  data-ai-hint="doctor patient"
-                />
+                {heroImage && (
+                  <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl border-8 border-white aspect-[4/3] w-full">
+                    <Image 
+                      src={heroImage.imageUrl} 
+                      alt={heroImage.description} 
+                      fill
+                      className="object-cover"
+                      data-ai-hint={heroImage.imageHint}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>
