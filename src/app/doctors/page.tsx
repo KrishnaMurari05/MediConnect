@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from 'react'
@@ -7,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import { Search, MapPin, Star, Filter, Calendar, MessageSquare } from 'lucide-react'
+import { Search, MapPin, Star, Filter, Calendar, MessageSquare, Award } from 'lucide-react'
 import { MOCK_DOCTORS, Doctor } from '@/app/lib/mock-data'
 import Link from 'next/link'
 
@@ -26,10 +27,30 @@ export default function DoctorsPage() {
       
       <main className="flex-1 container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto space-y-12">
+          {/* Hero Banner for Registration */}
+          <Card className="bg-primary overflow-hidden border-none rounded-3xl relative">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+            <CardContent className="p-10 flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+              <div className="space-y-4 max-w-xl text-white text-center md:text-left">
+                <Badge className="bg-white/20 text-white hover:bg-white/30 border-none px-4 py-1 rounded-full">
+                  Doctor Opportunities
+                </Badge>
+                <h2 className="text-3xl md:text-4xl font-extrabold leading-tight">Become a Verified Specialist</h2>
+                <p className="text-white/80">Register as a specialist on Bharat's most trusted health platform. Pass our medical skill test and join our elite specialist panel.</p>
+                <Button asChild variant="secondary" size="lg" className="rounded-full font-bold h-12 px-8">
+                  <Link href="/doctors/register">Apply Now <Award className="ml-2 h-5 w-5" /></Link>
+                </Button>
+              </div>
+              <div className="hidden lg:block w-48 h-48 bg-white/10 rounded-3xl rotate-12 flex items-center justify-center">
+                <Stethoscope className="w-24 h-24 text-white opacity-40" />
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-end gap-6">
             <div className="space-y-2">
-              <h1 className="text-4xl font-extrabold tracking-tight">Our Specialists</h1>
+              <h1 className="text-4xl font-extrabold tracking-tight">Our Network of Doctors</h1>
               <p className="text-muted-foreground text-lg">Choose from top-rated professionals verified by HealthWise.</p>
             </div>
             <div className="w-full md:w-96 flex gap-2">
