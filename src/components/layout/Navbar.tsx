@@ -1,7 +1,7 @@
 "use client"
 
 import Link from 'next/link'
-import { Heart, User, Menu, X, ClipboardList, Stethoscope, MessageSquare, BookOpen } from 'lucide-react'
+import { Heart, User, Menu, X, ClipboardList, Stethoscope, Sparkles, BookOpen } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
@@ -20,7 +20,7 @@ export default function Navbar() {
     { name: 'Home', href: '/', icon: Heart },
     { name: 'Assessment', href: '/questionnaire', icon: ClipboardList },
     { name: 'Find Doctors', href: '/doctors', icon: Stethoscope },
-    { name: 'Consultations', href: '/consultations', icon: MessageSquare },
+    { name: 'AI Assistant', href: '/assistant', icon: Sparkles },
     { name: 'Blog', href: '/blog', icon: BookOpen },
   ]
 
@@ -45,7 +45,7 @@ export default function Navbar() {
                 href={link.href}
                 className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary flex items-center gap-1.5"
               >
-                <link.icon size={16} />
+                <link.icon size={16} className={link.name === 'AI Assistant' ? 'text-accent' : ''} />
                 {link.name}
               </Link>
             ))}
@@ -93,7 +93,7 @@ export default function Navbar() {
                 className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-primary hover:bg-muted"
               >
                 <div className="flex items-center gap-3">
-                  <link.icon size={20} />
+                  <link.icon size={20} className={link.name === 'AI Assistant' ? 'text-accent' : ''} />
                   {link.name}
                 </div>
               </Link>

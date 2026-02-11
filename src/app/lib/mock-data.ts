@@ -7,6 +7,8 @@ export interface Doctor {
   fees: number;
   avatar: string;
   location: string;
+  address: string;
+  phone: string;
   bio: string;
   availability: string[];
 }
@@ -21,6 +23,8 @@ export const MOCK_DOCTORS: Doctor[] = [
     fees: 75,
     avatar: 'https://picsum.photos/seed/doc1/200/200',
     location: 'New York, NY',
+    address: '450 Lexington Ave, New York, NY 10017',
+    phone: '+1 (212) 555-0123',
     bio: 'Experienced GP focused on holistic family health and preventive care.',
     availability: ['Mon 9am-5pm', 'Wed 10am-6pm']
   },
@@ -33,6 +37,8 @@ export const MOCK_DOCTORS: Doctor[] = [
     fees: 150,
     avatar: 'https://picsum.photos/seed/doc2/200/200',
     location: 'San Francisco, CA',
+    address: '100 Larkin St, San Francisco, CA 94102',
+    phone: '+1 (415) 555-0199',
     bio: 'Specialist in cardiovascular diseases and heart health management.',
     availability: ['Tue 8am-4pm', 'Thu 9am-5pm']
   },
@@ -45,6 +51,8 @@ export const MOCK_DOCTORS: Doctor[] = [
     fees: 60,
     avatar: 'https://picsum.photos/seed/doc3/200/200',
     location: 'Miami, FL',
+    address: '1501 Biscayne Blvd, Miami, FL 33132',
+    phone: '+1 (305) 555-0144',
     bio: 'Helping patients achieve wellness through balanced nutrition and lifestyle changes.',
     availability: ['Mon-Fri 10am-2pm']
   },
@@ -57,6 +65,8 @@ export const MOCK_DOCTORS: Doctor[] = [
     fees: 120,
     avatar: 'https://picsum.photos/seed/doc4/200/200',
     location: 'Chicago, IL',
+    address: '400 N Michigan Ave, Chicago, IL 60611',
+    phone: '+1 (312) 555-0177',
     bio: 'Expert in skin health, specializing in acne treatment and skin rejuvenation.',
     availability: ['Wed 2pm-8pm', 'Sat 9am-1pm']
   }
