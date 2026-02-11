@@ -19,7 +19,7 @@ interface ChatMessage {
 
 export default function AssistantPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'model', text: "Namaste! I'm HealthWise Pan-India AI. How can I help you today? I can find doctors across all of India—from Mumbai to Kolkata, sugerst Indian diet plans, or provide home care tips. Please let me know your city if you are looking for a doctor!" }
+    { role: 'model', text: "Namaste! I'm HealthWise Pan-India AI. How can I help you today? I can find top doctors across Bharat—from Kanpur and Lucknow to Mumbai and Chennai. I also suggest Indian diet plans and provide home care tips. Please let me know your city if you are looking for a specialist!" }
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -58,9 +58,9 @@ export default function AssistantPage() {
   }
 
   const quickActions = [
-    { label: "Pediatrician in Chennai", icon: Stethoscope, prompt: "I am in Chennai, find me a pediatrician." },
-    { label: "Orthopedic in Kolkata", icon: Stethoscope, prompt: "Find an orthopedic surgeon in Kolkata." },
-    { label: "Cardiologist in Delhi", icon: Stethoscope, prompt: "I am in Delhi, find me a cardiologist." },
+    { label: "Cardiologist in Kanpur", icon: Stethoscope, prompt: "I am in Kanpur, find me a cardiologist." },
+    { label: "Neurologist in Kanpur", icon: Stethoscope, prompt: "Find a neurologist in Kanpur." },
+    { label: "Pediatrician in Kanpur", icon: Stethoscope, prompt: "I am in Kanpur, find me a pediatrician." },
     { label: "Healthy Indian Diet", icon: Utensils, prompt: "Suggest a healthy Indian vegetarian diet plan." }
   ]
 
@@ -147,9 +147,16 @@ export default function AssistantPage() {
                               <Phone size={12} className="shrink-0" />
                               <span>{doc.phone}</span>
                             </div>
-                            <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
-                              <Clock size={12} className="shrink-0" />
-                              <span>{doc.availability[0]}</span>
+                            <div className="flex flex-col gap-1 text-[11px] text-muted-foreground">
+                              <div className="flex items-center gap-2">
+                                <Clock size={12} className="shrink-0" />
+                                <span className="font-bold">Timings:</span>
+                              </div>
+                              <div className="pl-5 space-y-0.5 italic">
+                                {doc.availability.map((time, idx) => (
+                                  <div key={idx}>{time}</div>
+                                ))}
+                              </div>
                             </div>
                           </div>
                           <Button size="sm" className="w-full h-8 text-xs rounded-full">
@@ -218,7 +225,7 @@ export default function AssistantPage() {
           <Card className="border-none shadow-xl bg-accent text-white rounded-3xl p-6 space-y-4">
             <h3 className="font-bold">Pan-India Support</h3>
             <p className="text-xs opacity-90 leading-relaxed">
-              Serving Mumbai, Delhi, Bangalore, Chennai, Hyderabad, Kolkata, and 100+ cities across Bharat.
+              Serving Kanpur, Lucknow, Mumbai, Delhi, Bangalore, and 100+ cities across Bharat.
             </p>
             <div className="pt-2">
               <div className="text-[10px] uppercase font-bold opacity-60 mb-2">Service Status</div>
