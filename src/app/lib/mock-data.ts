@@ -91,3 +91,55 @@ export const MOCK_CONSULTATIONS: Consultation[] = [
     ]
   }
 ];
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  author: string;
+  authorRole: string;
+  date: string;
+  image: string;
+  readTime: string;
+  category: string;
+}
+
+export const MOCK_BLOGS: BlogPost[] = [
+  {
+    id: '1',
+    title: 'The 30-Minute Walk: A Prescription for Heart Health',
+    excerpt: 'Dr. Devi Shetty explains why consistency in movement is the ultimate shield against cardiovascular issues.',
+    content: `In my decades of practice as a cardiac surgeon, I have seen the most complex heart conditions. However, the most powerful prevention isn't found in a bottle of pills—it's in your walking shoes. A regular 30-minute brisk walk daily can reduce the risk of heart failure by nearly 40%. Fitness isn't about running marathons; it's about staying 'regularly fit' through daily, moderate exertion that keeps the heart muscle strong and the arteries flexible.`,
+    author: 'Dr. Devi Shetty',
+    authorRole: 'Cardiac Surgeon & Philanthropist',
+    date: 'Oct 15, 2023',
+    image: 'https://picsum.photos/seed/blog1/800/400',
+    readTime: '5 min read',
+    category: 'Heart Health'
+  },
+  {
+    id: '2',
+    title: 'Functional Fitness for the Modern Indian Lifestyle',
+    excerpt: 'Dr. Naresh Trehan discusses how to incorporate exercise into a busy professional life without needing a gym.',
+    content: `We often hear people say they don't have time for the gym. But 'regular fit' doesn't mean you need a luxury membership. It means functional movement. Taking the stairs at your office, using a standing desk, or doing simple bodyweight squats between meetings. Our traditional lifestyles were naturally active; we must now consciously re-introduce that movement. Your body is designed to move, not to sit for 10 hours a day.`,
+    author: 'Dr. Naresh Trehan',
+    authorRole: 'Cardiovascular Surgeon',
+    date: 'Nov 02, 2023',
+    image: 'https://picsum.photos/seed/blog2/800/400',
+    readTime: '6 min read',
+    category: 'Lifestyle'
+  },
+  {
+    id: '3',
+    title: 'Nutrition: The Foundation of Regular Fitness',
+    excerpt: 'Dr. Anjali Mukerjee breaks down the myths of dieting and shares a sustainable approach to eating.',
+    content: `Fitness is 70% nutrition. You cannot out-train a poor diet. In India, we have a carbohydrate-heavy diet that often lacks sufficient protein. Achieving a fit body requires balancing our traditional meals with higher protein sources like sprouts, paneer, and dals, while reducing refined sugars. Sustainability is key—don't follow a diet you can't maintain for a lifetime. Choose a 'regular' healthy way of eating.`,
+    author: 'Dr. Anjali Mukerjee',
+    authorRole: 'Nutritionist & Wellness Expert',
+    date: 'Dec 10, 2023',
+    image: 'https://picsum.photos/seed/blog3/800/400',
+    readTime: '4 min read',
+    category: 'Nutrition'
+  }
+];

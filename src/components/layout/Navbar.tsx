@@ -1,7 +1,7 @@
 "use client"
 
 import Link from 'next/link'
-import { Heart, User, Menu, X, ClipboardList, Stethoscope, MessageSquare } from 'lucide-react'
+import { Heart, User, Menu, X, ClipboardList, Stethoscope, MessageSquare, BookOpen } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
@@ -21,6 +21,7 @@ export default function Navbar() {
     { name: 'Assessment', href: '/questionnaire', icon: ClipboardList },
     { name: 'Find Doctors', href: '/doctors', icon: Stethoscope },
     { name: 'Consultations', href: '/consultations', icon: MessageSquare },
+    { name: 'Blog', href: '/blog', icon: BookOpen },
   ]
 
   return (

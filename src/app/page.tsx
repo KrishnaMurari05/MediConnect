@@ -2,12 +2,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Navbar from '@/components/layout/Navbar'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { ShieldCheck, Zap, HeartPulse, ArrowRight, Activity, Users, Star } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
+import { ShieldCheck, Zap, HeartPulse, ArrowRight, Activity, Users, Star, BookOpen, Clock, Calendar } from 'lucide-react'
 import { PlaceHolderImages } from '@/lib/placeholder-images'
+import { MOCK_BLOGS } from '@/app/lib/mock-data'
+import { Badge } from '@/components/ui/badge'
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find(img => img.id === 'health-hero')
+  const featuredBlogs = MOCK_BLOGS.slice(0, 3)
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -106,6 +109,63 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Featured Blogs Section */}
+        <section className="py-24 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-between items-end mb-12">
+              <div className="space-y-4">
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Expert Insights</h2>
+                <p className="text-lg text-muted-foreground">Read from leading doctors about how to stay regular and fit.</p>
+              </div>
+              <Button asChild variant="ghost" className="hidden md:flex items-center gap-2 group text-primary font-bold">
+                <Link href="/blog">
+                  View All Articles <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {featuredBlogs.map((post) => (
+                <Link key={post.id} href={`/blog/${post.id}`}>
+                  <Card className="h-full group overflow-hidden border-none shadow-xl hover:shadow-2xl transition-all cursor-pointer">
+                    <div className="aspect-video relative overflow-hidden">
+                      <Image 
+                        src={post.image} 
+                        alt={post.title} 
+                        fill 
+                        className="object-cover transition-transform group-hover:scale-105"
+                      />
+                    </div>
+                    <CardHeader className="p-6">
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
+                        <span className="flex items-center gap-1">
+                          <Calendar size={14} />
+                          {post.date}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock size={14} />
+                          {post.readTime}
+                        </span>
+                      </div>
+                      <CardTitle className="text-xl group-hover:text-primary transition-colors line-clamp-2">
+                        {post.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="px-6 pb-6">
+                      <div className="flex items-center gap-2 pt-4 border-t">
+                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">
+                          {post.author.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <span className="text-xs font-bold">{post.author}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Social Proof */}
         <section className="bg-primary text-white py-20">
           <div className="container mx-auto px-4 text-center space-y-12">
@@ -166,7 +226,7 @@ export default function Home() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link href="/questionnaire">Health Check</Link></li>
               <li><Link href="/doctors">Doctors</Link></li>
-              <li><Link href="/pricing">Pricing</Link></li>
+              <li><Link href="/blog">Blog</Link></li>
               <li><Link href="/faq">FAQ</Link></li>
             </ul>
           </div>
