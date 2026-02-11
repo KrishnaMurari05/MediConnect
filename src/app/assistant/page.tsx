@@ -19,7 +19,7 @@ interface ChatMessage {
 
 export default function AssistantPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'model', text: "Namaste! I'm HealthWise India AI. How can I help you today? I can find doctors across India, suggest diet plans, or provide home care tips. Please let me know your city if you are looking for a doctor!" }
+    { role: 'model', text: "Namaste! I'm HealthWise Pan-India AI. How can I help you today? I can find doctors across all of India—from Mumbai to Kolkata, sugerst Indian diet plans, or provide home care tips. Please let me know your city if you are looking for a doctor!" }
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -58,9 +58,10 @@ export default function AssistantPage() {
   }
 
   const quickActions = [
+    { label: "Pediatrician in Chennai", icon: Stethoscope, prompt: "I am in Chennai, find me a pediatrician." },
+    { label: "Orthopedic in Kolkata", icon: Stethoscope, prompt: "Find an orthopedic surgeon in Kolkata." },
     { label: "Cardiologist in Delhi", icon: Stethoscope, prompt: "I am in Delhi, find me a cardiologist." },
-    { label: "GP in Mumbai", icon: Stethoscope, prompt: "Find a doctor in Mumbai." },
-    { label: "Indian Diet Chart", icon: Utensils, prompt: "Suggest an Indian diet chart for weight loss." }
+    { label: "Healthy Indian Diet", icon: Utensils, prompt: "Suggest a healthy Indian vegetarian diet plan." }
   ]
 
   return (
@@ -76,8 +77,8 @@ export default function AssistantPage() {
                 <Bot className="h-6 w-6" />
               </div>
               <div>
-                <CardTitle className="text-xl">HealthWise India AI</CardTitle>
-                <p className="text-xs text-white/70">Bharat's AI Care Partner • India Only</p>
+                <CardTitle className="text-xl">HealthWise Pan-India AI</CardTitle>
+                <p className="text-xs text-white/70">Bharat's Comprehensive AI Care Partner • Pan-India</p>
               </div>
             </div>
             <Sparkles className="h-5 w-5 text-accent animate-pulse" />
@@ -118,7 +119,7 @@ export default function AssistantPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2 animate-in fade-in slide-in-from-bottom-2 duration-500">
                     <div className="col-span-full bg-blue-50 border border-blue-100 rounded-2xl p-4 flex items-center gap-3">
                       <MapIcon className="text-primary h-5 w-5" />
-                      <span className="text-xs font-bold text-primary uppercase tracking-wider">Nearby Specialists in India</span>
+                      <span className="text-xs font-bold text-primary uppercase tracking-wider">Top Rated Specialists Found</span>
                     </div>
                     {msg.doctors.map((doc) => (
                       <Card key={doc.id} className="overflow-hidden border-none shadow-md bg-white hover:shadow-lg transition-shadow">
@@ -140,7 +141,7 @@ export default function AssistantPage() {
                           <div className="space-y-1.5">
                             <div className="flex items-start gap-2 text-[11px] text-muted-foreground">
                               <MapPin size={12} className="shrink-0 mt-0.5" />
-                              <span>{doc.address}</span>
+                              <span className="line-clamp-2">{doc.address}</span>
                             </div>
                             <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
                               <Phone size={12} className="shrink-0" />
@@ -152,7 +153,7 @@ export default function AssistantPage() {
                             </div>
                           </div>
                           <Button size="sm" className="w-full h-8 text-xs rounded-full">
-                            Navigate Now
+                            Navigate via Map
                           </Button>
                         </div>
                       </Card>
@@ -195,7 +196,7 @@ export default function AssistantPage() {
             <div className="flex w-full items-center gap-2 bg-muted/30 p-1.5 rounded-full border">
               <Input 
                 className="border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground/60 h-10 flex-1 px-4"
-                placeholder="Ask me anything (Only in India)..."
+                placeholder="Ask me anything (Pan-India Coverage)..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
@@ -212,18 +213,18 @@ export default function AssistantPage() {
           </CardFooter>
         </Card>
 
-        {/* Info Sidebar (Optional Desktop view) */}
+        {/* Info Sidebar */}
         <div className="hidden lg:flex flex-col w-64 gap-6">
           <Card className="border-none shadow-xl bg-accent text-white rounded-3xl p-6 space-y-4">
-            <h3 className="font-bold">Indian Healthcare Support</h3>
+            <h3 className="font-bold">Pan-India Support</h3>
             <p className="text-xs opacity-90 leading-relaxed">
-              We cover major cities including Mumbai, Delhi, Bangalore, Hyderabad, and more.
+              Serving Mumbai, Delhi, Bangalore, Chennai, Hyderabad, Kolkata, and 100+ cities across Bharat.
             </p>
             <div className="pt-2">
               <div className="text-[10px] uppercase font-bold opacity-60 mb-2">Service Status</div>
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-xs">Live in Bharat</span>
+                <span className="text-xs">Live Pan-India</span>
               </div>
             </div>
           </Card>

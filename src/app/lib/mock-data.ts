@@ -79,6 +79,38 @@ export const MOCK_DOCTORS: Doctor[] = [
     availability: ['Wed 2pm-8pm', 'Sat 9am-1pm'],
     lat: 17.4262,
     lng: 78.4116
+  },
+  {
+    id: 'doc5',
+    name: 'Dr. Anita Desai',
+    specialization: 'Pediatrician',
+    experience: 14,
+    rating: 4.9,
+    fees: 700,
+    avatar: 'https://picsum.photos/seed/doc5/200/200',
+    location: 'Chennai, Tamil Nadu',
+    address: 'Apollo Children’s Hospital, Shafee Mohammed Rd, Chennai 600006',
+    phone: '+91 44 2829 6262',
+    bio: 'Dedicated pediatrician providing specialized care for children and infants in Chennai.',
+    availability: ['Mon-Sat 9am-1pm'],
+    lat: 13.0617,
+    lng: 80.2520
+  },
+  {
+    id: 'doc6',
+    name: 'Dr. Rajesh Khanna',
+    specialization: 'Orthopedic Surgeon',
+    experience: 18,
+    rating: 4.6,
+    fees: 1000,
+    avatar: 'https://picsum.photos/seed/doc6/200/200',
+    location: 'Kolkata, West Bengal',
+    address: 'AMRI Hospitals, Gariahat Rd, Kolkata 700029',
+    phone: '+91 33 6680 0000',
+    bio: 'Renowned orthopedic surgeon specializing in joint replacements and trauma surgery in Kolkata.',
+    availability: ['Tue 10am-4pm', 'Fri 10am-4pm'],
+    lat: 22.5152,
+    lng: 88.3619
   }
 ];
 
