@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { MOCK_DOCTORS } from '@/app/lib/mock-data'
-import { ShieldCheck, CreditCard, ChevronLeft, Lock, Info, Star } from 'lucide-react'
+import { ShieldCheck, CreditCard, ChevronLeft, Lock, Info, Star, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useUser, useFirestore } from '@/firebase'
 import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates'
@@ -27,33 +27,40 @@ export default function SpecialistPaymentPage() {
     if (!firestore || !user || !doctor) return
     setIsProcessing(true)
 
-    // Create a new chat session
-    const chatRef = await addDocumentNonBlocking(collection(firestore, 'specialist_chat_sessions'), {
-      userId: user.uid,
-      specialistId: doctor.id,
-      messages: ["Payment successful. You can now start your consultation."],
-      feeCharged: chatFee,
-      topic: `${doctor.specialization} Consultation`,
-      status: 'active',
-      createdAt: new Date().toISOString()
-    })
+    try {
+      // Create a new chat session
+      const chatRef = await addDocumentNonBlocking(collection(firestore, 'specialist_chat_sessions'), {
+        userId: user.uid,
+        specialistId: doctor.id,
+        messages: ["System: Payment successful. You can now start your consultation."],
+        feeCharged: chatFee,
+        topic: `${doctor.specialization} Consultation`,
+        status: 'active',
+        createdAt: new Date().toISOString()
+      })
 
-    // Create payment record
-    addDocumentNonBlocking(collection(firestore, 'payments'), {
-      userId: user.uid,
-      doctorId: doctor.id,
-      amount: chatFee,
-      stripeId: 'mock_specialist_pay_' + Math.random().toString(36).substr(2, 9),
-      status: 'completed',
-      createdAt: new Date().toISOString()
-    })
+      // Create payment record
+      addDocumentNonBlocking(collection(firestore, 'payments'), {
+        userId: user.uid,
+        doctorId: doctor.id,
+        amount: chatFee,
+        stripeId: 'mock_specialist_pay_' + Math.random().toString(36).substr(2, 9),
+        status: 'completed',
+        createdAt: new Date().toISOString()
+      })
 
-    // Simulate payment processing
-    setTimeout(() => {
+      // Navigate to the newly created session
+      if (chatRef) {
+        router.push(`/specialists/chat/${chatRef.id}`)
+      } else {
+        // Fallback if reference wasn't returned immediately for some reason
+        router.push('/specialists/my-chats')
+      }
+    } catch (error) {
+      console.error("Payment failed", error)
+    } finally {
       setIsProcessing(false)
-      // Navigate to chat (mocking ID since addDocument is non-blocking)
-      router.push(`/specialists/chat/active`)
-    }, 1500)
+    }
   }
 
   if (!doctor) return null
@@ -91,7 +98,7 @@ export default function SpecialistPaymentPage() {
                 <div className="bg-muted/50 p-4 rounded-2xl text-sm space-y-2">
                    <div className="flex items-start gap-2 text-muted-foreground">
                      <Info size={16} className="shrink-0 mt-0.5" />
-                     <p>Includes direct chat access for 48 hours and a digital prescription if required.</p>
+                     <p>Includes direct chat access and a digital prescription if required.</p>
                    </div>
                 </div>
               </div>
@@ -127,7 +134,13 @@ export default function SpecialistPaymentPage() {
                 disabled={isProcessing} 
                 className="w-full h-14 rounded-full text-lg font-bold shadow-xl shadow-primary/20"
               >
-                {isProcessing ? "Processing Securely..." : `Pay ₹${chatFee} & Start Chat`}
+                {isProcessing ? (
+                  <>
+                    <Loader2 className="mr-2 animate-spin" /> Processing Securely...
+                  </>
+                ) : (
+                  `Pay ₹${chatFee} & Start Chat`
+                )}
               </Button>
             </CardFooter>
           </Card>

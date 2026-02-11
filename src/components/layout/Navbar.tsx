@@ -2,7 +2,7 @@
 "use client"
 
 import Link from 'next/link'
-import { Heart, User, Menu, X, ClipboardList, Stethoscope, Sparkles, BookOpen, Crown } from 'lucide-react'
+import { Heart, User, Menu, X, ClipboardList, Stethoscope, Sparkles, BookOpen, Crown, MessageSquare } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
@@ -61,7 +61,11 @@ export default function Navbar() {
                 <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile Settings</DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/specialists/my-chats">
+                      <MessageSquare className="mr-2 h-4 w-4" /> Specialist Chats
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem>Medical History</DropdownMenuItem>
                   <DropdownMenuItem>Billing</DropdownMenuItem>
                   <DropdownMenuSeparator />
@@ -100,6 +104,16 @@ export default function Navbar() {
                 </div>
               </Link>
             ))}
+            <Link
+                href="/specialists/my-chats"
+                onClick={() => setIsOpen(false)}
+                className="block px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-primary hover:bg-muted"
+              >
+                <div className="flex items-center gap-3">
+                  <MessageSquare size={20} />
+                  My Chats
+                </div>
+              </Link>
           </div>
         </div>
       )}
