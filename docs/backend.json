@@ -1,0 +1,522 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the HealthCheck Pro application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user.",
+          "format": "uuid"
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user.",
+          "format": "email"
+        },
+        "profile": {
+          "type": "string",
+          "description": "Reference to UserProfile. (Relationship: User 1:1 UserProfile)"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp indicating when the user account was created.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "profile",
+        "createdAt"
+      ]
+    },
+    "UserProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserProfile",
+      "type": "object",
+      "description": "Represents the profile information for a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user profile."
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the user."
+        },
+        "age": {
+          "type": "number",
+          "description": "Age of the user."
+        },
+        "gender": {
+          "type": "string",
+          "description": "Gender of the user."
+        },
+        "medicalHistory": {
+          "type": "array",
+          "description": "Array of medical history items for the user.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "age",
+        "gender"
+      ]
+    },
+    "Doctor": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Doctor",
+      "type": "object",
+      "description": "Represents a doctor in the HealthCheck Pro application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the doctor."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the doctor.",
+          "format": "email"
+        },
+        "profile": {
+          "type": "string",
+          "description": "Reference to DoctorProfile. (Relationship: Doctor 1:1 DoctorProfile)"
+        },
+        "availability": {
+          "type": "array",
+          "description": "Array of available time slots for the doctor.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "profile"
+      ]
+    },
+    "DoctorProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "DoctorProfile",
+      "type": "object",
+      "description": "Represents the profile information for a doctor.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the doctor profile."
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the doctor."
+        },
+        "specialization": {
+          "type": "string",
+          "description": "Area of specialization of the doctor."
+        },
+        "license": {
+          "type": "string",
+          "description": "License number of the doctor."
+        },
+        "rating": {
+          "type": "number",
+          "description": "Average rating of the doctor."
+        },
+        "fees": {
+          "type": "number",
+          "description": "Consultation fees charged by the doctor."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "specialization",
+        "license",
+        "rating",
+        "fees"
+      ]
+    },
+    "Questionnaire": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Questionnaire",
+      "type": "object",
+      "description": "Represents a health questionnaire filled out by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the questionnaire."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Questionnaire)"
+        },
+        "responses": {
+          "type": "string",
+          "description": "Responses to the questionnaire questions (JSON String)."
+        },
+        "bmi": {
+          "type": "number",
+          "description": "Body Mass Index calculated from the questionnaire responses."
+        },
+        "insights": {
+          "type": "string",
+          "description": "Personalized health insights generated from the questionnaire responses."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "responses",
+        "bmi",
+        "insights"
+      ]
+    },
+    "Consultation": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Consultation",
+      "type": "object",
+      "description": "Represents a consultation between a user and a doctor.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the consultation."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Consultation)"
+        },
+        "doctorId": {
+          "type": "string",
+          "description": "Reference to Doctor. (Relationship: Doctor 1:N Consultation)"
+        },
+        "messages": {
+          "type": "array",
+          "description": "Array of messages exchanged during the consultation.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "prescription": {
+          "type": "string",
+          "description": "Text of the prescription provided by the doctor."
+        },
+        "reportUrl": {
+          "type": "string",
+          "description": "URL of the consultation report (PDF).",
+          "format": "uri"
+        },
+        "tests": {
+          "type": "array",
+          "description": "Array of recommended tests.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "paymentId": {
+          "type": "string",
+          "description": "Reference to Payment. (Relationship: Payment 1:1 Consultation)"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the consultation (e.g., ongoing, completed)."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "doctorId",
+        "messages",
+        "status"
+      ]
+    },
+    "Payment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Payment",
+      "type": "object",
+      "description": "Represents a payment made for a consultation.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the payment."
+        },
+        "amount": {
+          "type": "number",
+          "description": "Amount paid for the consultation."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Payment)"
+        },
+        "doctorId": {
+          "type": "string",
+          "description": "Reference to Doctor. (Relationship: Doctor 1:N Payment)"
+        },
+        "stripeId": {
+          "type": "string",
+          "description": "Stripe payment intent ID."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the payment (e.g., pending, completed)."
+        }
+      },
+      "required": [
+        "id",
+        "amount",
+        "userId",
+        "doctorId",
+        "stripeId",
+        "status"
+      ]
+    },
+    "SpecialistRegistration": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "SpecialistRegistration",
+      "type": "object",
+      "description": "Represents a registration request for a doctor to become a specialist.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the specialist registration."
+        },
+        "doctorId": {
+          "type": "string",
+          "description": "Reference to Doctor. (Relationship: Doctor 1:1 SpecialistRegistration)"
+        },
+        "testScore": {
+          "type": "number",
+          "description": "Score obtained by the doctor in the skills test."
+        },
+        "registrationFee": {
+          "type": "number",
+          "description": "Fee charged for specialist registration."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the registration request (e.g., pending, approved, rejected)."
+        },
+        "specialistCategory": {
+          "type": "string",
+          "description": "The specialist category the doctor is applying for."
+        }
+      },
+      "required": [
+        "id",
+        "doctorId",
+        "testScore",
+        "registrationFee",
+        "status",
+        "specialistCategory"
+      ]
+    },
+    "SpecialistChatSession": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "SpecialistChatSession",
+      "type": "object",
+      "description": "Represents a chat session with a specialist doctor.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the specialist chat session."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N SpecialistChatSession)"
+        },
+        "specialistId": {
+          "type": "string",
+          "description": "Reference to Doctor (Specialist). (Relationship: Doctor 1:N SpecialistChatSession)"
+        },
+        "messages": {
+          "type": "array",
+          "description": "Array of messages exchanged during the chat session.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "feeCharged": {
+          "type": "number",
+          "description": "Fee charged for the chat session."
+        },
+        "topic": {
+          "type": "string",
+          "description": "The specific topic or matter of the chat session."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "specialistId",
+        "messages",
+        "feeCharged",
+        "topic"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user account information. Path-based ownership, ensures only the authenticated user can access their data.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/profile",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "Stores user profile information. Path-based ownership, ensures only the authenticated user can access their profile.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/questionnaires/{questionnaireId}",
+        "definition": {
+          "entityName": "Questionnaire",
+          "schema": {
+            "$ref": "#/backend/entities/Questionnaire"
+          },
+          "description": "Stores questionnaires filled out by users. Path-based ownership, ensures only the authenticated user can access their questionnaires.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "questionnaireId",
+              "description": "The unique identifier of the questionnaire."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/doctors/{doctorId}",
+        "definition": {
+          "entityName": "Doctor",
+          "schema": {
+            "$ref": "#/backend/entities/Doctor"
+          },
+          "description": "Stores doctor information. Path-based ownership, ensures only the authenticated doctor can access their data.",
+          "params": [
+            {
+              "name": "doctorId",
+              "description": "The unique identifier of the doctor."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/doctors/{doctorId}/profile",
+        "definition": {
+          "entityName": "DoctorProfile",
+          "schema": {
+            "$ref": "#/backend/entities/DoctorProfile"
+          },
+          "description": "Stores doctor profile information. Path-based ownership, ensures only the authenticated doctor can access their profile.",
+          "params": [
+            {
+              "name": "doctorId",
+              "description": "The unique identifier of the doctor."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/consultations/{consultationId}",
+        "definition": {
+          "entityName": "Consultation",
+          "schema": {
+            "$ref": "#/backend/entities/Consultation"
+          },
+          "description": "Stores consultation information. Includes 'userId' and 'doctorId' for authorization independence.",
+          "params": [
+            {
+              "name": "consultationId",
+              "description": "The unique identifier of the consultation."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/payments/{paymentId}",
+        "definition": {
+          "entityName": "Payment",
+          "schema": {
+            "$ref": "#/backend/entities/Payment"
+          },
+          "description": "Stores payment information. Includes 'userId' and `doctorId` to know which doctor and user are involved in the payment.",
+          "params": [
+            {
+              "name": "paymentId",
+              "description": "The unique identifier of the payment."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/specialist_registrations/{registrationId}",
+        "definition": {
+          "entityName": "SpecialistRegistration",
+          "schema": {
+            "$ref": "#/backend/entities/SpecialistRegistration"
+          },
+          "description": "Stores specialist registration requests. Requires admin authorization for approval.",
+          "params": [
+            {
+              "name": "registrationId",
+              "description": "The unique identifier of the specialist registration."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/specialist_chat_sessions/{sessionId}",
+        "definition": {
+          "entityName": "SpecialistChatSession",
+          "schema": {
+            "$ref": "#/backend/entities/SpecialistChatSession"
+          },
+          "description": "Stores specialist chat sessions. Includes 'userId' and 'specialistId' for authorization independence.",
+          "params": [
+            {
+              "name": "sessionId",
+              "description": "The unique identifier of the specialist chat session."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "This Firestore structure is designed to support the HealthCheck Pro application, focusing on secure and scalable data management, particularly around user profiles, doctor registration, specialist chats, and consultations. The design emphasizes authorization independence to facilitate robust security rules and atomic operations. The core entities are Users, Doctors, UserProfiles, DoctorProfiles, Questionnaires, Consultations, Payments, SpecialistRegistrations, and SpecialistChatSessions.\n\n*   **Authorization Independence (CRITICAL):** To avoid hierarchical authorization dependencies, the structure denormalizes authorization context. For instance, if a subcollection's access depends on the parent's attributes (e.g., the members of a chat session), those attributes are copied into every document in the subcollection. This eliminates the need for `get()` calls in security rules.\n*   **Clarity of Intent (Debuggability):** The structure makes authorization intent explicit through consistent path-based ownership for user-owned data and membership maps for collaborative data.\n*   **DBAC (No Custom Claims):** Roles are stored in the database, and authorization relies solely on `request.auth.uid`.\n*   **QAPs (Rules are not Filters):** The structure supports secure `list` operations by segregating data based on access needs and using membership models. This ensures that security rules do not act as filters, preventing unauthorized data exposure.\n\n**Data Segregation and Access Modeling:**\n\n*   **Users and Doctors:** User and doctor data are stored in separate top-level collections (`/users` and `/doctors`), and their profiles are stored in subcollections (`/users/{userId}/profiles` and `/doctors/{doctorId}/profiles`), ensuring clear separation of concerns and simplified security rules based on user roles.\n*   **Questionnaires:** Questionnaires are stored in a subcollection of users (`/users/{userId}/questionnaires`), reflecting the 1:N relationship between users and questionnaires and enabling easy retrieval of a user's questionnaires.\n*   **Consultations and Payments:** Consultations are stored in a top-level collection, including both `userId` and `doctorId` and the payments are stored in a subcollection. Payments are stored in a top-level `/payments` collection. Consultations are associated by ids. This supports querying consultations by either user or doctor. Security rules can easily verify that the user initiating the request is either the user or the doctor involved in the consultation.\n*   **Specialist Registrations:** Specialist registration requests are stored in the `/specialist_registrations` collection. Security rules can be applied to ensure that only authorized personnel can approve or reject registration requests.\n*   **Specialist Chat Sessions:** Specialist chat sessions are stored in the `/specialist_chat_sessions` collection. Each document contains both the `userId` and `specialistId`, enabling easy retrieval of chat sessions for both users and specialists. A fee is charged for these sessions, and the chat is directly created on this document. Security rules can verify that only the user and specialist involved in the chat session can access the messages.\n\n**Authorization Independence:**\n\n*   Each document contains the necessary information for authorization, reducing the need for complex `get()` calls in security rules. For example, the `Consultation` document includes both `userId` and `doctorId`, allowing security rules to easily verify that the user initiating the request is either the user or the doctor involved in the consultation.\n\n**Support for QAPs (Rules are not Filters):**\n\n*   The structure enables secure `list` operations by segregating data based on access needs and using membership models where appropriate. For example, the `/users/{userId}/questionnaires` path allows listing questionnaires only for a specific user, ensuring that users cannot access questionnaires belonging to other users.\n"
+  }
+}

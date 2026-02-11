@@ -1,0 +1,174 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * HEALTHCHECK PRO SECURITY RULES PHILOSOPHY
+     * 
+     * Core Philosophy:
+     * This ruleset implements a dual-layered security model. Personal health data and private 
+     * profiles are strictly protected by a path-based ownership model (P3.1). Collaborative 
+     * interactions, such as consultations and specialist chats, utilize shared-access 
+     * authorization (P3.3) by verifying that the authenticated user is a participant 
+     * (either the patient or the doctor) directly on the document.
+     * 
+     * Data Structure:
+     * - User-private data is nested under /users/{userId}, ensuring a hard boundary.
+     * - Doctor-private data is nested under /doctors/{doctorId}.
+     * - Shared interactions (Consultations, SpecialistChats, Payments) are top-level 
+     *   collections where the document contains 'userId' and 'doctorId' fields for 
+     *   fast, denormalized authorization (P1).
+     * 
+     * Key Security Decisions:
+     * - Self-Creation: Users and Doctors can only create their root documents if the ID 
+     *   matches their Auth UID (P3.4).
+     * - Relational Integrity: On creation of shared documents, rules enforce that the 
+     *   client-provided 'userId' matches the current Auth UID to prevent impersonation (P5).
+     * - Prototyping Mode: Schema validation is omitted for non-relational fields to 
+     *   allow rapid data structure iteration.
+     * - Auditable Updates: All updates and deletes require existence checks (P7).
+     */
+
+    // --- Helper Functions ---
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isExistingOwner(userId) {
+      return resource != null && isOwner(userId);
+    }
+
+    function isParticipant(uId, dId) {
+      return isSignedIn() && (request.auth.uid == uId || request.auth.uid == dId);
+    }
+
+    function isExistingParticipant(uId, dId) {
+      return resource != null && isParticipant(uId, dId);
+    }
+
+    // --- Collection Rules ---
+
+    /**
+     * @description Controls access to the root user account document.
+     * @path /users/{userId}
+     * @allow (create) if auth.uid matches userId.
+     * @deny (get) if auth.uid does not match userId.
+     * @principle Enforces path-based ownership and self-registration.
+     */
+    match /users/{userId} {
+      allow get, list: if isOwner(userId);
+      allow create: if isOwner(userId);
+      allow update, delete: if isExistingOwner(userId);
+
+      /**
+       * @description Controls access to the user's detailed medical profile.
+       * @path /users/{userId}/profile/{profileId}
+       * @allow (create) if the userId in the path matches the authenticated user.
+       * @principle Ensures sensitive medical history remains private to the owner.
+       */
+      match /profile/{profileId} {
+        allow get, list: if isOwner(userId);
+        allow create: if isOwner(userId);
+        allow update, delete: if isExistingOwner(userId);
+      }
+
+      /**
+       * @description Controls access to personalized health questionnaires and insights.
+       * @path /users/{userId}/questionnaires/{questionnaireId}
+       * @allow (get) if the owner is viewing their own insights.
+       * @principle Protects derived health data (BMI/Insights) via ownership.
+       */
+      match /questionnaires/{questionnaireId} {
+        allow get, list: if isOwner(userId);
+        allow create: if isOwner(userId) && request.resource.data.userId == userId;
+        allow update, delete: if isExistingOwner(userId);
+      }
+    }
+
+    /**
+     * @description Controls access to doctor account and availability data.
+     * @path /doctors/{doctorId}
+     * @allow (get) for any signed-in user to enable the "Find Doctors" feature.
+     * @deny (update) if the authenticated user is not the doctor themselves.
+     * @principle Public discovery with private write access.
+     */
+    match /doctors/{doctorId} {
+      allow get, list: if isSignedIn();
+      allow create: if isOwner(doctorId);
+      allow update, delete: if isExistingOwner(doctorId);
+
+      /**
+       * @description Controls access to doctor profiles (specialization, fees, ratings).
+       * @path /doctors/{doctorId}/profile/{profileId}
+       * @allow (get) for signed-in users to view doctor credentials.
+       * @principle Public profile visibility with owner-only content management.
+       */
+      match /profile/{profileId} {
+        allow get, list: if isSignedIn();
+        allow create: if isOwner(doctorId);
+        allow update, delete: if isExistingOwner(doctorId);
+      }
+    }
+
+    /**
+     * @description Controls access to private consultations between users and doctors.
+     * @path /consultations/{consultationId}
+     * @allow (get) if auth.uid matches either the userId or doctorId stored in the doc.
+     * @deny (create) if the client attempts to set a 'userId' that isn't their own.
+     * @principle Shared access model (P3.3) for collaborative documents.
+     */
+    match /consultations/{consultationId} {
+      allow get: if isParticipant(resource.data.userId, resource.data.doctorId);
+      allow list: if isSignedIn(); // Queries must filter by userId or doctorId.
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isExistingParticipant(resource.data.userId, resource.data.doctorId);
+    }
+
+    /**
+     * @description Controls access to payment records.
+     * @path /payments/{paymentId}
+     * @allow (get) if the authenticated user is the payer (user) or the payee (doctor).
+     * @principle Protects financial transactions while allowing both parties to verify status.
+     */
+    match /payments/{paymentId} {
+      allow get: if isParticipant(resource.data.userId, resource.data.doctorId);
+      allow list: if isSignedIn();
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isExistingParticipant(resource.data.userId, resource.data.doctorId);
+    }
+
+    /**
+     * @description Controls specialist registration requests and test scores.
+     * @path /specialist_registrations/{registrationId}
+     * @allow (create) if the doctorId matches the authenticated doctor.
+     * @deny (update) Placeholder: Status updates usually require admin roles.
+     * @principle Restricts registration intent to the specific doctor.
+     */
+    match /specialist_registrations/{registrationId} {
+      allow get: if isSignedIn() && isOwner(resource.data.doctorId);
+      allow list: if isSignedIn();
+      allow create: if isSignedIn() && request.resource.data.doctorId == request.auth.uid;
+      // TODO: Implement 'admin' check for status approvals once admin roles are defined.
+      allow update: if isExistingOwner(resource.data.doctorId);
+      allow delete: if isExistingOwner(resource.data.doctorId);
+    }
+
+    /**
+     * @description Controls the specialist chat section with fee-based access.
+     * @path /specialist_chat_sessions/{sessionId}
+     * @allow (get) if the user is the patient or the specialist doctor.
+     * @principle Multi-party authorization for private communication.
+     */
+    match /specialist_chat_sessions/{sessionId} {
+      allow get: if isParticipant(resource.data.userId, resource.data.specialistId);
+      allow list: if isSignedIn();
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isExistingParticipant(resource.data.userId, resource.data.specialistId);
+    }
+  }
+}
