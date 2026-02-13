@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ChevronLeft, Calendar, Clock, Share2, Bookmark } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function BlogDetailPage() {
   const { id } = useParams()

@@ -74,6 +74,7 @@ export default function DoctorRegistrationPage() {
 
     const isLicenseValid = validateLicense(formData.license)
 
+    // Simulate verification delay
     setTimeout(() => {
       setIsSubmitting(false)
       
