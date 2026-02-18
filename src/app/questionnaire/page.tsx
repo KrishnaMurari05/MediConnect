@@ -11,7 +11,7 @@ import { Progress } from '@/components/ui/progress'
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
-import { ChevronRight, ChevronLeft, Loader2, CheckCircle2, AlertTriangle, Activity, Sparkles, Heart } from 'lucide-react'
+import { ChevronRight, ChevronLeft, Loader2, CheckCircle2, AlertTriangle, Activity, Sparkles, Heart, ShieldCheck } from 'lucide-react'
 import { personalizedHealthInsights, PersonalizedHealthInsightsOutput } from '@/ai/flows/personalized-health-insights'
 import { Badge } from '@/components/ui/badge'
 
