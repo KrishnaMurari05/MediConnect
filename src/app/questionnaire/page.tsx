@@ -8,81 +8,82 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Progress } from '@/components/ui/progress'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
-import { ChevronRight, ChevronLeft, Loader2, CheckCircle2, AlertTriangle, Activity, Languages } from 'lucide-react'
+import { ChevronRight, ChevronLeft, Loader2, CheckCircle2, AlertTriangle, Activity, Sparkles, Heart } from 'lucide-react'
 import { personalizedHealthInsights, PersonalizedHealthInsightsOutput } from '@/ai/flows/personalized-health-insights'
+import { Badge } from '@/components/ui/badge'
 
 const TRANSLATIONS = {
   en: {
     title: "Health Assessment",
-    subtitle: "Complete this quick form to get personalized insights and doctor recommendations.",
-    step: (s: number, t: number) => `Step ${s} of ${t}`,
-    complete: (p: number) => `${p.toFixed(0)}% Complete`,
-    back: "Back",
-    next: "Next",
-    finish: "Finish Assessment",
-    analyzing: "Analyzing...",
-    basicInfo: "Basic Information",
-    age: "Age",
-    gender: "Gender",
-    height: (h: number) => `Height: ${h} cm`,
-    weight: (w: number) => `Weight: ${w} kg`,
-    symptomsTitle: "Symptoms & Concerns",
-    symptomsLabel: "What health issues are you currently experiencing?",
-    symptomsPlaceholder: "e.g. Mild headache, persistent fatigue, back pain...",
-    symptomsHint: "Be as specific as possible for better AI analysis.",
-    lifestyleTitle: "Lifestyle & Diet",
-    dietLabel: "Primary Diet",
-    activityLabel: "Activity Level",
-    historyTitle: "Medical History",
-    historyLabel: "Known chronic conditions or past surgeries",
-    historyPlaceholder: "e.g. Type 2 Diabetes, High Blood Pressure...",
-    resultReady: "Your Health Assessment is Ready",
-    resultSubtitle: "Based on your responses and AI analysis.",
-    bioMetrics: "Bio Metrics",
-    bmiScore: "BMI Score",
-    aiInsights: "AI Health Insights",
-    riskFactors: "Identified Risk Factors",
-    speakDoctor: "Speak to a Recommended Doctor",
-    takeAgain: "Take Assessment Again",
+    subtitle: "Complete our hyper-personalized assessment for clinical-grade AI insights.",
+    step: (s: number, t: number) => `Phase ${s} / ${t}`,
+    complete: (p: number) => `${p.toFixed(0)}% Analyzed`,
+    back: "Previous",
+    next: "Continue",
+    finish: "Generate Analysis",
+    analyzing: "AI Processing...",
+    basicInfo: "Metabolic Baseline",
+    age: "Current Age",
+    gender: "Gender Identity",
+    height: (h: number) => `Stature: ${h} cm`,
+    weight: (w: number) => `Body Mass: ${w} kg`,
+    symptomsTitle: "Current Physiological Concerns",
+    symptomsLabel: "Detail any symptoms or recurring issues",
+    symptomsPlaceholder: "e.g. Occasional morning dizziness, persistent knee fatigue...",
+    symptomsHint: "Detailed descriptions improve the accuracy of our AI diagnostics.",
+    lifestyleTitle: "Dietary & Lifestyle Patterns",
+    dietLabel: "Nutrition Strategy",
+    activityLabel: "Physical Activity Level",
+    historyTitle: "Clinical History",
+    historyLabel: "Existing conditions or surgical history",
+    historyPlaceholder: "e.g. Managed Type 2 Diabetes, appendectomy (2018)...",
+    resultReady: "Your Health Portfolio is Ready",
+    resultSubtitle: "Advanced AI analysis based on your unique clinical profile.",
+    bioMetrics: "Body Composition",
+    bmiScore: "BMI Index",
+    aiInsights: "Personalized AI Protocol",
+    riskFactors: "Critical Vigilance Areas",
+    speakDoctor: "Connect with a Specialist",
+    takeAgain: "Recalibrate Assessment",
     male: "Male",
     female: "Female",
     other: "Other"
   },
   hi: {
     title: "स्वास्थ्य मूल्यांकन",
-    subtitle: "व्यक्तिगत जानकारी और डॉक्टर की सिफारिशें प्राप्त करने के लिए यह त्वरित फ़ॉर्म भरें।",
-    step: (s: number, t: number) => `चरण ${s} का ${t}`,
-    complete: (p: number) => `${p.toFixed(0)}% पूर्ण`,
+    subtitle: "AI आधारित व्यक्तिगत स्वास्थ्य अंतर्दृष्टि के लिए यह मूल्यांकन पूरा करें।",
+    step: (s: number, t: number) => `चरण ${s} / ${t}`,
+    complete: (p: number) => `${p.toFixed(0)}% विश्लेषण`,
     back: "पीछे",
-    next: "आगे",
-    finish: "मूल्यांकन समाप्त करें",
-    analyzing: "विश्लेषण हो रहा है...",
-    basicInfo: "मूल जानकारी",
+    next: "आगे बढ़ें",
+    finish: "विश्लेषण प्राप्त करें",
+    analyzing: "AI विश्लेषण हो रहा है...",
+    basicInfo: "बुनियादी जानकारी",
     age: "आयु",
     gender: "लिंग",
     height: (h: number) => `ऊंचाई: ${h} सेमी`,
     weight: (w: number) => `वजन: ${w} किलो`,
-    symptomsTitle: "लक्षण और चिंताएं",
-    symptomsLabel: "आप वर्तमान में किन स्वास्थ्य समस्याओं का सामना कर रहे हैं?",
-    symptomsPlaceholder: "जैसे हल्का सिरदर्द, लगातार थकान, पीठ दर्द...",
-    symptomsHint: "बेहतर AI विश्लेषण के लिए यथासंभव विशिष्ट रहें।",
+    symptomsTitle: "लक्षण और शारीरिक चिंताएं",
+    symptomsLabel: "अपनी स्वास्थ्य समस्याओं का विवरण दें",
+    symptomsPlaceholder: "जैसे थकान, पीठ दर्द, नींद की कमी...",
+    symptomsHint: "AI की सटीकता के लिए विस्तार से लिखें।",
     lifestyleTitle: "जीवनशैली और आहार",
-    dietLabel: "प्राथमिक आहार",
-    activityLabel: "गतिविधि का स्तर",
+    dietLabel: "आहार के प्रकार",
+    activityLabel: "शारीरिक गतिविधि",
     historyTitle: "चिकित्सा इतिहास",
-    historyLabel: "ज्ञात पुरानी स्थितियां या पिछली सर्जरी",
-    historyPlaceholder: "जैसे टाइप 2 मधुमेह, उच्च रक्तचाप...",
-    resultReady: "आपका स्वास्थ्य मूल्यांकन तैयार है",
-    resultSubtitle: "आपकी प्रतिक्रियाओं और AI विश्लेषण के आधार पर।",
-    bioMetrics: "बायो मेट्रिक्स",
-    bmiScore: "बीएमआई स्कोर",
-    aiInsights: "AI स्वास्थ्य अंतर्दृष्टि",
-    riskFactors: "पहचाने गए जोखिम कारक",
-    speakDoctor: "अनुशंसित डॉक्टर से बात करें",
-    takeAgain: "फिर से मूल्यांकन लें",
+    historyLabel: "पुरानी बीमारियाँ या सर्जरी",
+    historyPlaceholder: "जैसे मधुमेह, उच्च रक्तचाप...",
+    resultReady: "आपका स्वास्थ्य पोर्टफोलियो तैयार है",
+    resultSubtitle: "AI विश्लेषण आपकी अद्वितीय प्रोफ़ाइल के आधार पर।",
+    bioMetrics: "शारीरिक विवरण",
+    bmiScore: "BMI स्कोर",
+    aiInsights: "AI स्वास्थ्य सलाह",
+    riskFactors: "सावधानी के क्षेत्र",
+    speakDoctor: "विशेषज्ञ से बात करें",
+    takeAgain: "पुनः मूल्यांकन लें",
     male: "पुरुष",
     female: "महिला",
     other: "अन्य"
@@ -137,10 +138,10 @@ export default function QuestionnairePage() {
 
   const bmi = (formData.weight / ((formData.height / 100) ** 2)).toFixed(1)
   const getBmiCategory = (val: number) => {
-    if (val < 18.5) return { label: language === 'en' ? 'Underweight' : 'कम वजन', color: 'text-blue-500' }
-    if (val < 25) return { label: language === 'en' ? 'Normal weight' : 'सामान्य वजन', color: 'text-green-500' }
-    if (val < 30) return { label: language === 'en' ? 'Overweight' : 'अधिक वजन', color: 'text-yellow-500' }
-    return { label: language === 'en' ? 'Obese' : 'मोटापा', color: 'text-red-500' }
+    if (val < 18.5) return { label: language === 'en' ? 'Underweight' : 'कम वजन', color: 'text-blue-600', bg: 'bg-blue-50' }
+    if (val < 25) return { label: language === 'en' ? 'Optimal' : 'सामान्य', color: 'text-green-600', bg: 'bg-green-50' }
+    if (val < 30) return { label: language === 'en' ? 'Overweight' : 'अधिक वजन', color: 'text-yellow-600', bg: 'bg-yellow-50' }
+    return { label: language === 'en' ? 'Obese' : 'मोटापा', color: 'text-red-600', bg: 'bg-red-50' }
   }
   const bmiCat = getBmiCategory(parseFloat(bmi))
 
@@ -148,93 +149,105 @@ export default function QuestionnairePage() {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
-        <div className="container mx-auto px-4 py-12 max-w-4xl">
-          <div className="space-y-8 animate-in fade-in zoom-in duration-500">
-            <div className="flex justify-end mb-4">
-              <div className="flex items-center gap-2 bg-muted p-1 rounded-full border">
+        <div className="container mx-auto px-4 py-16 max-w-5xl">
+          <div className="space-y-12 animate-in fade-in zoom-in-95 duration-700">
+            <div className="flex justify-end">
+              <div className="flex items-center gap-1 bg-white p-1 rounded-full border shadow-sm">
                 <Button 
                   variant={language === 'en' ? 'default' : 'ghost'} 
                   size="sm" 
                   onClick={() => setLanguage('en')}
-                  className="rounded-full text-xs h-8 px-4"
+                  className="rounded-full text-xs h-9 px-6 font-black"
                 >
-                  English
+                  ENGLISH
                 </Button>
                 <Button 
                   variant={language === 'hi' ? 'default' : 'ghost'} 
                   size="sm" 
                   onClick={() => setLanguage('hi')}
-                  className="rounded-full text-xs h-8 px-4 font-bold"
+                  className="rounded-full text-xs h-9 px-6 font-black"
                 >
-                  हिंदी
+                  हिन्दी
                 </Button>
               </div>
             </div>
 
-            <div className="text-center space-y-2">
-              <CheckCircle2 className="mx-auto h-16 w-16 text-green-500" />
-              <h1 className="text-3xl font-bold">{t.resultReady}</h1>
-              <p className="text-muted-foreground">{t.resultSubtitle}</p>
+            <div className="text-center space-y-6">
+              <div className="mx-auto h-24 w-24 bg-green-100 rounded-[2rem] flex items-center justify-center shadow-xl shadow-green-200/50 animate-bounce">
+                <CheckCircle2 className="h-12 w-12 text-green-600" />
+              </div>
+              <div className="space-y-2">
+                <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-none">{t.resultReady}</h1>
+                <p className="text-xl text-muted-foreground font-medium">{t.resultSubtitle}</p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="md:col-span-1 border-primary/20 bg-primary/5 shadow-lg rounded-[2rem]">
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Activity className="h-5 w-5 text-primary" />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <Card className="lg:col-span-1 border-none bg-white shadow-2xl rounded-[3rem] p-4 interactive-card">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-xl font-black flex items-center gap-3">
+                    <Activity className="h-6 w-6 text-primary" />
                     {t.bioMetrics}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <div className="text-sm font-medium text-muted-foreground">{t.bmiScore}</div>
-                    <div className="text-4xl font-bold">{bmi}</div>
-                    <div className={`text-sm font-semibold ${bmiCat.color}`}>{bmiCat.label}</div>
+                <CardContent className="space-y-8">
+                  <div className={`p-8 rounded-[2.5rem] ${bmiCat.bg} border border-white/50 text-center space-y-2`}>
+                    <div className="text-xs font-black text-muted-foreground uppercase tracking-[0.2em]">{t.bmiScore}</div>
+                    <div className="text-6xl font-black tracking-tighter">{bmi}</div>
+                    <Badge className={`rounded-full px-6 py-1 font-black uppercase text-[10px] tracking-widest ${bmiCat.color} bg-white/80 border-none shadow-sm`}>
+                       {bmiCat.label}
+                    </Badge>
                   </div>
-                  <div className="grid grid-cols-2 gap-4 pt-4 border-t">
-                    <div>
-                      <div className="text-xs text-muted-foreground uppercase">{language === 'en' ? 'Weight' : 'वजन'}</div>
-                      <div className="font-bold">{formData.weight} kg</div>
+                  <div className="grid grid-cols-2 gap-6 pt-6 border-t border-muted">
+                    <div className="space-y-1">
+                      <div className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">{language === 'en' ? 'Weight' : 'वजन'}</div>
+                      <div className="text-2xl font-black">{formData.weight} <span className="text-sm font-medium">kg</span></div>
                     </div>
-                    <div>
-                      <div className="text-xs text-muted-foreground uppercase">{language === 'en' ? 'Height' : 'ऊंचाई'}</div>
-                      <div className="font-bold">{formData.height} cm</div>
+                    <div className="space-y-1">
+                      <div className="text-[10px] text-muted-foreground uppercase font-black tracking-widest">{language === 'en' ? 'Height' : 'ऊंचाई'}</div>
+                      <div className="text-2xl font-black">{formData.height} <span className="text-sm font-medium">cm</span></div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="md:col-span-2 border-accent/20 shadow-lg rounded-[2.5rem] overflow-hidden">
-                <CardHeader className="bg-muted/30">
-                  <CardTitle className="text-lg">{t.aiInsights}</CardTitle>
+              <Card className="lg:col-span-2 border-none shadow-2xl rounded-[3rem] overflow-hidden bg-white interactive-card flex flex-col">
+                <CardHeader className="bg-primary/5 p-8 border-b border-primary/5">
+                  <CardTitle className="text-xl font-black flex items-center gap-3">
+                    <Sparkles className="h-6 w-6 text-accent" />
+                    {t.aiInsights}
+                  </CardTitle>
                 </CardHeader>
-                <CardContent className="p-8">
-                  <p className="whitespace-pre-wrap text-foreground/80 leading-relaxed">
-                    {language === 'en' ? result.insights : result.insightsHindi}
-                  </p>
+                <CardContent className="p-10 flex-1 overflow-y-auto no-scrollbar">
+                  <div className="prose prose-blue max-w-none">
+                    <p className="whitespace-pre-wrap text-foreground/80 leading-relaxed font-medium text-lg italic border-l-4 border-primary/20 pl-8">
+                      {language === 'en' ? result.insights : result.insightsHindi}
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
             </div>
 
-            <Card className="border-red-100 bg-red-50/50 shadow-md rounded-[2rem]">
-              <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2 text-red-700">
-                  <AlertTriangle className="h-5 w-5" />
+            <Card className="border-none bg-gradient-to-br from-red-50 to-white shadow-xl rounded-[3rem] p-4 relative overflow-hidden group interactive-card">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-red-100/50 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:scale-150 transition-transform duration-700" />
+              <CardHeader className="pb-4">
+                <CardTitle className="text-xl font-black flex items-center gap-3 text-red-700 uppercase tracking-tight">
+                  <AlertTriangle className="h-7 w-7" />
                   {t.riskFactors}
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-red-900/80 whitespace-pre-wrap leading-relaxed">
+              <CardContent className="p-8">
+                <p className="text-red-900/80 whitespace-pre-wrap leading-relaxed font-bold text-lg">
                   {language === 'en' ? result.riskFactors : result.riskFactorsHindi}
                 </p>
               </CardContent>
             </Card>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-              <Button size="lg" className="rounded-full px-8 h-12 shadow-lg" onClick={() => router.push('/doctors')}>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center pt-12">
+              <Button size="lg" className="h-16 rounded-full px-12 text-lg font-black shadow-2xl shadow-primary/30 transition-all hover:translate-y-[-4px] active:scale-95" onClick={() => router.push('/doctors')}>
                 {t.speakDoctor}
               </Button>
-              <Button variant="outline" size="lg" className="rounded-full px-8 h-12" onClick={() => {
+              <Button variant="outline" size="lg" className="h-16 rounded-full px-12 text-lg font-black border-primary/10 hover:bg-white interactive-card" onClick={() => {
                 setResult(null)
                 setStep(1)
               }}>
@@ -250,19 +263,19 @@ export default function QuestionnairePage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="container mx-auto px-4 py-12 max-w-2xl">
-        <div className="space-y-8">
-          <div className="flex justify-between items-center">
-             <div className="space-y-2">
-                <h1 className="text-3xl font-black tracking-tight">{t.title}</h1>
-                <p className="text-muted-foreground text-sm">{t.subtitle}</p>
+      <div className="container mx-auto px-4 py-16 max-w-3xl">
+        <div className="space-y-10">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+             <div className="space-y-3">
+                <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-none">{t.title}</h1>
+                <p className="text-lg text-muted-foreground font-medium max-w-lg">{t.subtitle}</p>
              </div>
-             <div className="flex items-center gap-1 bg-muted p-1 rounded-full border">
+             <div className="flex items-center gap-1 bg-white p-1 rounded-full border shadow-sm shrink-0 self-end md:self-auto">
                 <Button 
                   variant={language === 'en' ? 'default' : 'ghost'} 
                   size="icon" 
                   onClick={() => setLanguage('en')}
-                  className="rounded-full h-8 w-8 text-[10px]"
+                  className="rounded-full h-10 w-10 text-[10px] font-black"
                 >
                   EN
                 </Button>
@@ -270,120 +283,127 @@ export default function QuestionnairePage() {
                   variant={language === 'hi' ? 'default' : 'ghost'} 
                   size="icon" 
                   onClick={() => setLanguage('hi')}
-                  className="rounded-full h-8 w-8 text-[10px] font-bold"
+                  className="rounded-full h-10 w-10 text-[10px] font-black"
                 >
                   हि
                 </Button>
              </div>
           </div>
 
-          <div className="space-y-4">
-            <Progress value={progress} className="h-2" />
-            <div className="flex justify-between text-[10px] font-black text-muted-foreground uppercase tracking-widest">
-              <span>{t.step(step, totalSteps)}</span>
-              <span>{t.complete(progress)}</span>
+          <div className="space-y-6">
+            <div className="flex justify-between items-end">
+               <div className="space-y-1">
+                  <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">{t.step(step, totalSteps)}</div>
+                  <div className="text-2xl font-black text-primary">
+                     {step === 1 ? t.basicInfo : step === 2 ? t.symptomsTitle : step === 3 ? t.lifestyleTitle : t.historyTitle}
+                  </div>
+               </div>
+               <span className="text-[10px] font-black text-primary/60 uppercase tracking-[0.2em] mb-1">{t.complete(progress)}</span>
             </div>
+            <Progress value={progress} className="h-3 bg-primary/5 rounded-full overflow-hidden">
+               <div className="h-full bg-primary transition-all duration-500 shadow-[0_0_10px_rgba(63,81,181,0.3)]" />
+            </Progress>
           </div>
 
-          <Card className="shadow-2xl border-none rounded-[2.5rem] overflow-hidden">
-            <CardContent className="p-8 md:p-12">
+          <Card className="shadow-3xl border-none rounded-[3.5rem] overflow-hidden bg-white animate-in slide-in-from-bottom-8 duration-700">
+            <CardContent className="p-10 md:p-16">
               {step === 1 && (
-                <div className="space-y-6 animate-in fade-in slide-in-from-right-4">
-                  <h2 className="text-xl font-bold flex items-center gap-2">
-                    <Activity className="text-primary h-5 w-5" /> {t.basicInfo}
-                  </h2>
-                  <div className="grid grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="age" className="font-bold">{t.age}</Label>
+                <div className="space-y-10 animate-in fade-in slide-in-from-right-8 duration-500">
+                  <div className="grid grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <Label htmlFor="age" className="font-black text-sm uppercase tracking-wider text-muted-foreground">{t.age}</Label>
                       <Input 
                         id="age" 
                         type="number" 
-                        className="h-12 rounded-xl"
+                        className="h-14 rounded-2xl border-primary/5 bg-muted/20 focus:bg-white text-lg font-black px-6 transition-all"
                         value={formData.age} 
                         onChange={(e) => setFormData({...formData, age: parseInt(e.target.value)})}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="gender" className="font-bold">{t.gender}</Label>
+                    <div className="space-y-3">
+                      <Label htmlFor="gender" className="font-black text-sm uppercase tracking-wider text-muted-foreground">{t.gender}</Label>
                       <Select value={formData.gender} onValueChange={(val) => setFormData({...formData, gender: val})}>
-                        <SelectTrigger id="gender" className="h-12 rounded-xl">
+                        <SelectTrigger id="gender" className="h-14 rounded-2xl border-primary/5 bg-muted/20 focus:bg-white text-lg font-black px-6 transition-all">
                           <SelectValue placeholder="Select" />
                         </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="male">{t.male}</SelectItem>
-                          <SelectItem value="female">{t.female}</SelectItem>
-                          <SelectItem value="other">{t.other}</SelectItem>
+                        <SelectContent className="rounded-2xl border-primary/5">
+                          <SelectItem value="male" className="font-bold">{t.male}</SelectItem>
+                          <SelectItem value="female" className="font-bold">{t.female}</SelectItem>
+                          <SelectItem value="other" className="font-bold">{t.other}</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
-                  <div className="space-y-4 pt-4">
+                  <div className="space-y-6 pt-4">
                     <div className="flex justify-between items-center">
-                      <Label className="font-bold">{t.height(formData.height)}</Label>
+                      <Label className="font-black text-sm uppercase tracking-wider text-primary">{t.height(formData.height)}</Label>
                     </div>
                     <Slider 
                       value={[formData.height]} 
                       min={100} max={250} step={1} 
                       onValueChange={([val]) => setFormData({...formData, height: val})}
+                      className="py-4"
                     />
                   </div>
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     <div className="flex justify-between items-center">
-                      <Label className="font-bold">{t.weight(formData.weight)}</Label>
+                      <Label className="font-black text-sm uppercase tracking-wider text-primary">{t.weight(formData.weight)}</Label>
                     </div>
                     <Slider 
                       value={[formData.weight]} 
                       min={30} max={250} step={1} 
                       onValueChange={([val]) => setFormData({...formData, weight: val})}
+                      className="py-4"
                     />
                   </div>
                 </div>
               )}
 
               {step === 2 && (
-                <div className="space-y-6 animate-in fade-in slide-in-from-right-4">
-                  <h2 className="text-xl font-bold">{t.symptomsTitle}</h2>
-                  <div className="space-y-2">
-                    <Label htmlFor="symptoms" className="font-bold">{t.symptomsLabel}</Label>
+                <div className="space-y-8 animate-in fade-in slide-in-from-right-8 duration-500">
+                  <div className="space-y-4">
+                    <Label htmlFor="symptoms" className="font-black text-sm uppercase tracking-wider text-primary">{t.symptomsLabel}</Label>
                     <Textarea 
                       id="symptoms" 
                       placeholder={t.symptomsPlaceholder} 
-                      className="min-h-[150px] rounded-2xl"
+                      className="min-h-[200px] rounded-3xl border-primary/5 bg-muted/20 focus:bg-white text-lg font-medium p-8 transition-all resize-none"
                       value={formData.symptoms}
                       onChange={(e) => setFormData({...formData, symptoms: e.target.value})}
                     />
-                    <p className="text-xs text-muted-foreground italic">{t.symptomsHint}</p>
+                    <div className="flex items-center gap-3 bg-primary/5 p-4 rounded-2xl text-xs text-primary font-bold border border-primary/10 italic">
+                       <Sparkles size={14} className="animate-pulse" />
+                       {t.symptomsHint}
+                    </div>
                   </div>
                 </div>
               )}
 
               {step === 3 && (
-                <div className="space-y-6 animate-in fade-in slide-in-from-right-4">
-                  <h2 className="text-xl font-bold">{t.lifestyleTitle}</h2>
-                  <div className="space-y-2">
-                    <Label htmlFor="diet" className="font-bold">{t.dietLabel}</Label>
+                <div className="space-y-10 animate-in fade-in slide-in-from-right-8 duration-500">
+                  <div className="space-y-4">
+                    <Label htmlFor="diet" className="font-black text-sm uppercase tracking-wider text-primary">{t.dietLabel}</Label>
                     <Select value={formData.diet} onValueChange={(val) => setFormData({...formData, diet: val})}>
-                      <SelectTrigger id="diet" className="h-12 rounded-xl">
+                      <SelectTrigger id="diet" className="h-16 rounded-3xl border-primary/5 bg-muted/20 focus:bg-white text-lg font-black px-8">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="balanced">{language === 'en' ? 'Balanced' : 'संतुलित'}</SelectItem>
-                        <SelectItem value="vegetarian">{language === 'en' ? 'Vegetarian' : 'शाकाहारी'}</SelectItem>
-                        <SelectItem value="vegan">{language === 'en' ? 'Vegan' : 'वीगन'}</SelectItem>
-                        <SelectItem value="keto">{language === 'en' ? 'Keto' : 'कीटो'}</SelectItem>
+                      <SelectContent className="rounded-3xl border-primary/5">
+                        <SelectItem value="balanced" className="font-bold py-3">{language === 'en' ? 'Balanced / Omnivorous' : 'संतुलित'}</SelectItem>
+                        <SelectItem value="vegetarian" className="font-bold py-3">{language === 'en' ? 'Lacto-Vegetarian' : 'शाकाहारी'}</SelectItem>
+                        <SelectItem value="vegan" className="font-bold py-3">{language === 'en' ? 'Plant-Based / Vegan' : 'वीगन'}</SelectItem>
+                        <SelectItem value="keto" className="font-bold py-3">{language === 'en' ? 'Ketogenic / Low-Carb' : 'कीटो'}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="exercise" className="font-bold">{t.activityLabel}</Label>
+                  <div className="space-y-4">
+                    <Label htmlFor="exercise" className="font-black text-sm uppercase tracking-wider text-primary">{t.activityLabel}</Label>
                     <Select value={formData.exerciseLevel} onValueChange={(val) => setFormData({...formData, exerciseLevel: val})}>
-                      <SelectTrigger id="exercise" className="h-12 rounded-xl">
+                      <SelectTrigger id="exercise" className="h-16 rounded-3xl border-primary/5 bg-muted/20 focus:bg-white text-lg font-black px-8">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="sedentary">{language === 'en' ? 'Sedentary' : 'सुस्त'}</SelectItem>
-                        <SelectItem value="moderate">{language === 'en' ? 'Moderate' : 'मध्यम'}</SelectItem>
-                        <SelectItem value="active">{language === 'en' ? 'Active' : 'सक्रिय'}</SelectItem>
+                      <SelectContent className="rounded-3xl border-primary/5">
+                        <SelectItem value="sedentary" className="font-bold py-3">{language === 'en' ? 'Sedentary (Minimal movement)' : 'सुस्त'}</SelectItem>
+                        <SelectItem value="moderate" className="font-bold py-3">{language === 'en' ? 'Moderate (3-4 days exercise)' : 'मध्यम'}</SelectItem>
+                        <SelectItem value="active" className="font-bold py-3">{language === 'en' ? 'Active (Elite physical activity)' : 'सक्रिय'}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -391,14 +411,13 @@ export default function QuestionnairePage() {
               )}
 
               {step === 4 && (
-                <div className="space-y-6 animate-in fade-in slide-in-from-right-4">
-                  <h2 className="text-xl font-bold">{t.historyTitle}</h2>
-                  <div className="space-y-2">
-                    <Label htmlFor="history" className="font-bold">{t.historyLabel}</Label>
+                <div className="space-y-8 animate-in fade-in slide-in-from-right-8 duration-500">
+                  <div className="space-y-4">
+                    <Label htmlFor="history" className="font-black text-sm uppercase tracking-wider text-primary">{t.historyLabel}</Label>
                     <Textarea 
                       id="history" 
                       placeholder={t.historyPlaceholder} 
-                      className="min-h-[150px] rounded-2xl"
+                      className="min-h-[200px] rounded-3xl border-primary/5 bg-muted/20 focus:bg-white text-lg font-medium p-8 transition-all resize-none"
                       value={formData.medicalHistory}
                       onChange={(e) => setFormData({...formData, medicalHistory: e.target.value})}
                     />
@@ -406,24 +425,24 @@ export default function QuestionnairePage() {
                 </div>
               )}
             </CardContent>
-            <CardFooter className="bg-muted/30 p-8 flex justify-between">
+            <CardFooter className="bg-muted/10 p-10 md:p-16 flex justify-between gap-6 border-t border-muted">
               <Button 
                 variant="ghost" 
                 onClick={handleBack} 
                 disabled={step === 1 || isSubmitting}
-                className="rounded-full"
+                className="rounded-full h-14 px-8 font-black text-primary hover:bg-primary/5 transition-all"
               >
-                <ChevronLeft className="mr-2 h-4 w-4" /> {t.back}
+                <ChevronLeft className="mr-3 h-5 w-5" /> {t.back}
               </Button>
               {step < totalSteps ? (
-                <Button onClick={handleNext} className="rounded-full px-8 h-12 shadow-lg">
-                  {t.next} <ChevronRight className="ml-2 h-4 w-4" />
+                <Button onClick={handleNext} className="rounded-full h-14 px-12 text-lg font-black shadow-2xl transition-all hover:translate-y-[-2px] active:scale-95">
+                  {t.next} <ChevronRight className="ml-3 h-5 w-5" />
                 </Button>
               ) : (
-                <Button onClick={handleSubmit} disabled={isSubmitting} className="rounded-full px-10 h-12 bg-accent hover:bg-accent/90 shadow-xl shadow-accent/20">
+                <Button onClick={handleSubmit} disabled={isSubmitting} className="rounded-full h-14 px-14 text-lg font-black bg-accent hover:bg-accent/90 shadow-2xl shadow-accent/30 transition-all hover:translate-y-[-4px] active:scale-95">
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      <Loader2 className="mr-3 h-6 w-6 animate-spin" />
                       {t.analyzing}
                     </>
                   ) : (
@@ -433,6 +452,12 @@ export default function QuestionnairePage() {
               )}
             </CardFooter>
           </Card>
+          
+          <div className="flex items-center justify-center gap-4 text-muted-foreground/40 font-black text-[10px] uppercase tracking-[0.3em]">
+             <ShieldCheck size={14} /> HIPAA Secure
+             <span className="h-1 w-1 rounded-full bg-muted-foreground/20" />
+             <Heart size={14} /> Made for Bharat
+          </div>
         </div>
       </div>
     </div>
