@@ -3,8 +3,8 @@
 /**
  * @fileOverview This file defines a Genkit flow for generating bilingual personalized health insights.
  *
- * The flow takes user's health data as input and returns personalized insights and potential risk factors
- * in both English and Hindi.
+ * The flow takes user's health data as input and returns personalized insights, risk factors,
+ * home-based therapy, and medication tips in both English and Hindi.
  */
 
 import {ai} from '@/ai/genkit';
@@ -26,6 +26,10 @@ const PersonalizedHealthInsightsOutputSchema = z.object({
   insightsHindi: z.string().describe('Personalized health insights in Hindi (हिंदी).'),
   riskFactors: z.string().describe('Potential risk factors in English.'),
   riskFactorsHindi: z.string().describe('Potential risk factors in Hindi (हिंदी).'),
+  homeTherapy: z.string().describe('Recommended home-based therapy or physical exercises in English.'),
+  homeTherapyHindi: z.string().describe('Recommended home-based therapy or physical exercises in Hindi (हिंदी).'),
+  medicationTips: z.string().describe('Home-based remedies or medication tips in English.'),
+  medicationTipsHindi: z.string().describe('Home-based remedies or medication tips in Hindi (हिंदी).'),
 });
 export type PersonalizedHealthInsightsOutput = z.infer<typeof PersonalizedHealthInsightsOutputSchema>;
 
@@ -37,10 +41,9 @@ const personalizedHealthInsightsPrompt = ai.definePrompt({
   name: 'personalizedHealthInsightsPrompt',
   input: {schema: PersonalizedHealthInsightsInputSchema},
   output: {schema: PersonalizedHealthInsightsOutputSchema},
-  prompt: `You are an AI health assistant providing personalized health insights and potential risk factors in both English and Hindi.
+  prompt: `You are an AI health assistant providing comprehensive health assessments.
 
-  Consider the following information about the user:
-
+  Based on the following data:
   Symptoms: {{{symptoms}}}
   Diet: {{{diet}}}
   Age: {{{age}}}
@@ -49,14 +52,14 @@ const personalizedHealthInsightsPrompt = ai.definePrompt({
   Exercise Level: {{{exerciseLevel}}}
   Medical History: {{{medicalHistory}}}
 
-  Based on this information, provide personalized health insights and identify potential risk factors.
-  You MUST provide both English and Hindi versions.
-  Ensure the Hindi translation is accurate and uses professional medical terminology appropriate for a general audience.
+  Provide:
+  1. Personalized health insights.
+  2. Potential risk factors.
+  3. Home-based therapy (e.g., specific stretches, breathing exercises, or physical therapy tips).
+  4. Home-based medication/remedy tips (e.g., Ayurvedic tips, common OTC suggestions with disclaimers).
 
-  English Insights:
-  Hindi Insights (हिंदी):
-  English Risk Factors:
-  Hindi Risk Factors (हिंदी):
+  You MUST provide both English and Hindi versions for all fields.
+  Ensure the tone is professional yet accessible.
   `,
 });
 

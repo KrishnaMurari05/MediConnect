@@ -11,7 +11,7 @@ import { Progress } from '@/components/ui/progress'
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
-import { ChevronRight, ChevronLeft, Loader2, CheckCircle2, AlertTriangle, Activity, Sparkles, Heart, ShieldCheck } from 'lucide-react'
+import { ChevronRight, ChevronLeft, Loader2, CheckCircle2, AlertTriangle, Activity, Sparkles, Heart, ShieldCheck, Pill, Stethoscope, Home, Utensils } from 'lucide-react'
 import { personalizedHealthInsights, PersonalizedHealthInsightsOutput } from '@/ai/flows/personalized-health-insights'
 import { Badge } from '@/components/ui/badge'
 
@@ -46,6 +46,10 @@ const TRANSLATIONS = {
     bmiScore: "BMI Index",
     aiInsights: "Personalized AI Protocol",
     riskFactors: "Critical Vigilance Areas",
+    homeTherapy: "Home-Based Therapy",
+    medicationTips: "Medication & Remedies",
+    prepareDiet: "Should I prepare a personalized diet for you?",
+    prepareDietBtn: "Prepare My Diet Plan",
     speakDoctor: "Connect with a Specialist",
     takeAgain: "Recalibrate Assessment",
     male: "Male",
@@ -82,6 +86,10 @@ const TRANSLATIONS = {
     bmiScore: "BMI स्कोर",
     aiInsights: "AI स्वास्थ्य सलाह",
     riskFactors: "सावधानी के क्षेत्र",
+    homeTherapy: "घर-आधारित चिकित्सा",
+    medicationTips: "दवा और उपचार",
+    prepareDiet: "क्या मुझे आपके लिए एक व्यक्तिगत आहार (Diet) तैयार करना चाहिए?",
+    prepareDietBtn: "मेरा डाइट प्लान बनाएं",
     speakDoctor: "विशेषज्ञ से बात करें",
     takeAgain: "पुनः मूल्यांकन लें",
     male: "पुरुष",
@@ -144,6 +152,11 @@ export default function QuestionnairePage() {
     return { label: language === 'en' ? 'Obese' : 'मोटापा', color: 'text-red-600', bg: 'bg-red-50' }
   }
   const bmiCat = getBmiCategory(parseFloat(bmi))
+
+  const handlePrepareDiet = () => {
+    const prompt = `Based on my recent assessment (Age: ${formData.age}, BMI: ${bmi}, Diet: ${formData.diet}, Activity: ${formData.exerciseLevel}), please prepare a detailed Indian diet plan for me.`
+    router.push(`/assistant?prompt=${encodeURIComponent(prompt)}`)
+  }
 
   if (result) {
     return (
@@ -228,6 +241,37 @@ export default function QuestionnairePage() {
               </Card>
             </div>
 
+            {/* New Sections: Therapy and Medication */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card className="border-none shadow-2xl rounded-[3rem] bg-white interactive-card">
+                <CardHeader className="p-8 border-b border-muted">
+                  <CardTitle className="text-xl font-black flex items-center gap-3 text-primary">
+                    <Home className="h-6 w-6" />
+                    {t.homeTherapy}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-8">
+                  <p className="whitespace-pre-wrap text-foreground/70 leading-relaxed font-medium">
+                    {language === 'en' ? result.homeTherapy : result.homeTherapyHindi}
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-none shadow-2xl rounded-[3rem] bg-white interactive-card">
+                <CardHeader className="p-8 border-b border-muted">
+                  <CardTitle className="text-xl font-black flex items-center gap-3 text-accent">
+                    <Pill className="h-6 w-6" />
+                    {t.medicationTips}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-8">
+                  <p className="whitespace-pre-wrap text-foreground/70 leading-relaxed font-medium">
+                    {language === 'en' ? result.medicationTips : result.medicationTipsHindi}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
             <Card className="border-none bg-gradient-to-br from-red-50 to-white shadow-xl rounded-[3rem] p-4 relative overflow-hidden group interactive-card">
               <div className="absolute top-0 right-0 w-40 h-40 bg-red-100/50 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:scale-150 transition-transform duration-700" />
               <CardHeader className="pb-4">
@@ -243,7 +287,26 @@ export default function QuestionnairePage() {
               </CardContent>
             </Card>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center pt-12">
+            {/* Diet Preparation CTA */}
+            <Card className="border-none bg-gradient-to-br from-primary to-accent text-white rounded-[3rem] p-8 md:p-12 shadow-3xl relative overflow-hidden group">
+              <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-white/10 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700" />
+              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="space-y-4 text-center md:text-left">
+                  <h3 className="text-3xl font-black tracking-tight">{t.prepareDiet}</h3>
+                  <p className="text-white/80 font-medium">Get a clinical-grade Indian nutrition plan based on your recent metabolic profile.</p>
+                </div>
+                <Button 
+                  onClick={handlePrepareDiet}
+                  size="lg" 
+                  variant="secondary" 
+                  className="h-16 px-10 rounded-full font-black text-lg shadow-2xl transition-all hover:translate-y-[-4px] bg-white text-primary hover:bg-white/90"
+                >
+                  <Utensils className="mr-3 h-6 w-6" /> {t.prepareDietBtn}
+                </Button>
+              </div>
+            </Card>
+
+            <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
               <Button size="lg" className="h-16 rounded-full px-12 text-lg font-black shadow-2xl shadow-primary/30 transition-all hover:translate-y-[-4px] active:scale-95" onClick={() => router.push('/doctors')}>
                 {t.speakDoctor}
               </Button>
