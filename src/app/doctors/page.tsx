@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Navbar from '@/components/layout/Navbar'
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -13,12 +13,16 @@ import Link from 'next/link'
 
 export default function DoctorsPage() {
   const [search, setSearch] = useState('')
-  const [doctors] = useState<Doctor[]>(MOCK_DOCTORS)
+  const doctors = MOCK_DOCTORS
 
-  const filteredDoctors = doctors.filter(doc => 
-    doc.name.toLowerCase().includes(search.toLowerCase()) ||
-    doc.specialization.toLowerCase().includes(search.toLowerCase())
-  )
+  const filteredDoctors = useMemo(() => {
+    const query = search.toLowerCase()
+    return doctors.filter(doc => 
+      doc.name.toLowerCase().includes(query) ||
+      doc.specialization.toLowerCase().includes(query) ||
+      doc.location.toLowerCase().includes(query)
+    )
+  }, [search, doctors])
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -56,7 +60,7 @@ export default function DoctorsPage() {
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input 
-                  placeholder="Search by name or specialty..." 
+                  placeholder="Search by name, specialty, or city..." 
                   className="pl-10 h-12 rounded-full border-primary/20"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}

@@ -70,6 +70,7 @@ export default function Home() {
                       className="object-cover"
                       data-ai-hint={heroImage.imageHint}
                       priority
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                     <div className="absolute bottom-8 left-8 right-8 bg-white/20 backdrop-blur-xl p-6 rounded-3xl border border-white/30">
                        <div className="flex items-center gap-4">
@@ -161,6 +162,7 @@ export default function Home() {
                         alt={post.title} 
                         fill 
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, 33vw"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
