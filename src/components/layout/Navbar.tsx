@@ -1,7 +1,7 @@
 "use client"
 
 import Link from 'next/link'
-import { Heart, User, Menu, X, ClipboardList, Stethoscope, Sparkles, BookOpen, Crown, MessageSquare, HeartPulse } from 'lucide-react'
+import { Heart, User, Menu, X, ClipboardList, Stethoscope, Sparkles, BookOpen, Crown, MessageSquare, HeartPulse, LogIn, LogOut, ShieldAlert } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import {
@@ -13,10 +13,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { cn } from '@/lib/utils'
+import { useUser, useAuth } from '@/firebase'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { user } = useUser()
+  const auth = useAuth()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +28,10 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const handleLogout = () => {
+    auth.signOut()
+  }
 
   const navLinks = [
     { name: 'Home', href: '/', icon: Heart },
@@ -73,41 +80,57 @@ export default function Navbar() {
               </Link>
             ))}
             <div className="ml-6 flex items-center gap-4">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="rounded-2xl border bg-white shadow-sm h-12 w-12 interactive-card">
-                    <User size={24} className="text-primary" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-64 rounded-[2rem] p-3 shadow-3xl border-primary/5">
-                  <DropdownMenuLabel className="px-4 py-3 text-lg font-black tracking-tight">My Command Centre</DropdownMenuLabel>
-                  <DropdownMenuSeparator className="mx-2" />
-                  <DropdownMenuItem asChild className="rounded-2xl p-3 focus:bg-primary/5 cursor-pointer group">
-                    <Link href="/specialists/my-chats" className="flex items-center">
-                      <div className="h-10 w-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mr-3 group-hover:scale-110 transition-transform">
-                        <MessageSquare className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <div className="font-black text-sm">Specialist Consults</div>
-                        <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Active 1-on-1 Chats</div>
-                      </div>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="rounded-2xl p-3 focus:bg-primary/5 cursor-pointer group">
-                    <div className="h-10 w-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mr-3 group-hover:scale-110 transition-transform">
-                      <ClipboardList className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <div className="font-black text-sm">Clinical History</div>
-                      <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Full Patient Record</div>
-                    </div>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator className="mx-2" />
-                  <DropdownMenuItem className="rounded-2xl p-3 focus:bg-destructive/5 text-destructive cursor-pointer font-black justify-center tracking-widest uppercase text-xs">
-                    Terminate Session
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="rounded-2xl border bg-white shadow-sm h-12 w-12 interactive-card">
+                      <User size={24} className="text-primary" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-72 rounded-[2rem] p-3 shadow-3xl border-primary/5">
+                    <DropdownMenuLabel className="px-4 py-3">
+                      <div className="font-black text-lg tracking-tight">My Command Centre</div>
+                      <div className="text-[10px] text-muted-foreground font-bold truncate max-w-[220px]">{user.email || 'Anonymous Patient'}</div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator className="mx-2" />
+                    <DropdownMenuItem asChild className="rounded-2xl p-3 focus:bg-primary/5 cursor-pointer group">
+                      <Link href="/specialists/my-chats" className="flex items-center">
+                        <div className="h-10 w-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mr-3 group-hover:scale-110 transition-transform">
+                          <MessageSquare className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <div className="font-black text-sm">Specialist Consults</div>
+                          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Active 1-on-1 Chats</div>
+                        </div>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild className="rounded-2xl p-3 focus:bg-primary/5 cursor-pointer group">
+                      <Link href="/admin" className="flex items-center">
+                        <div className="h-10 w-10 bg-red-50 text-red-600 rounded-xl flex items-center justify-center mr-3 group-hover:scale-110 transition-transform">
+                          <ShieldAlert className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <div className="font-black text-sm">Admin Portal</div>
+                          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Panel Management</div>
+                        </div>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator className="mx-2" />
+                    <DropdownMenuItem 
+                      onClick={handleLogout}
+                      className="rounded-2xl p-3 focus:bg-destructive/5 text-destructive cursor-pointer group font-black justify-center tracking-widest uppercase text-xs"
+                    >
+                      <LogOut size={16} className="mr-2 group-hover:scale-110 transition-transform" /> Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Button asChild className="h-12 px-8 rounded-full font-black shadow-lg interactive-card">
+                  <Link href="/login">
+                    Sign In <LogIn className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+              )}
             </div>
           </div>
 
@@ -146,18 +169,43 @@ export default function Navbar() {
                 </div>
               </Link>
             ))}
-            <Link
-                href="/specialists/my-chats"
+            {!user ? (
+               <Link
+                href="/login"
                 onClick={() => setIsOpen(false)}
-                className="block px-6 py-4 rounded-3xl text-lg font-black text-muted-foreground hover:text-primary hover:bg-primary/5"
+                className="block px-6 py-4 rounded-3xl text-lg font-black text-white bg-primary shadow-xl"
               >
-                <div className="flex items-center gap-5">
-                  <div className="p-3 rounded-2xl bg-amber-50 text-amber-600">
-                    <MessageSquare size={24} />
-                  </div>
-                  My Premium Chats
+                <div className="flex items-center justify-center gap-3">
+                  <LogIn size={24} /> Sign In
                 </div>
               </Link>
+            ) : (
+              <div className="space-y-4 border-t pt-4">
+                 <Link
+                  href="/specialists/my-chats"
+                  onClick={() => setIsOpen(false)}
+                  className="block px-6 py-4 rounded-3xl text-lg font-black text-muted-foreground hover:text-primary hover:bg-primary/5"
+                >
+                  <div className="flex items-center gap-5">
+                    <div className="p-3 rounded-2xl bg-amber-50 text-amber-600">
+                      <MessageSquare size={24} />
+                    </div>
+                    My Premium Chats
+                  </div>
+                </Link>
+                <button
+                  onClick={() => { handleLogout(); setIsOpen(false); }}
+                  className="w-full text-left px-6 py-4 rounded-3xl text-lg font-black text-red-600 hover:bg-red-50"
+                >
+                  <div className="flex items-center gap-5">
+                    <div className="p-3 rounded-2xl bg-red-50">
+                      <LogOut size={24} />
+                    </div>
+                    Sign Out
+                  </div>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
