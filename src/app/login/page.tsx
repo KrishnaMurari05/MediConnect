@@ -21,51 +21,54 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    try {
-      initiateEmailSignIn(auth, email, password)
-      // Note: Redirection is handled by the onAuthStateChanged listener in the FirebaseProvider/Navbar
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Authentication Failed",
-        description: error.message || "Please check your credentials and try again."
+    initiateEmailSignIn(auth, email, password)
+      .catch((error: any) => {
+        setIsLoading(false)
+        let description = "Please check your credentials and try again."
+        if (error.code === 'auth/invalid-credential') {
+          description = "Invalid email or password. Please try again."
+        } else if (error.code === 'auth/user-not-found') {
+          description = "No account found with this email."
+        } else if (error.code === 'auth/wrong-password') {
+          description = "Incorrect password. Please try again."
+        }
+        
+        toast({
+          variant: "destructive",
+          title: "Authentication Failed",
+          description: error.message || description
+        })
       })
-    } finally {
-      setIsLoading(false)
-    }
   }
 
-  const handleSignUp = async (e: React.FormEvent) => {
+  const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    try {
-      initiateEmailSignUp(auth, email, password)
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Registration Failed",
-        description: error.message || "Could not create account. Please try a different email."
+    initiateEmailSignUp(auth, email, password)
+      .catch((error: any) => {
+        setIsLoading(false)
+        toast({
+          variant: "destructive",
+          title: "Registration Failed",
+          description: error.message || "Could not create account. Please try a different email."
+        })
       })
-    } finally {
-      setIsLoading(false)
-    }
   }
 
   const handleGuestEntry = () => {
     setIsLoading(true)
-    try {
-      initiateAnonymousSignIn(auth)
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Guest Entry Failed",
-        description: "Anonymous sign-in is currently unavailable."
+    initiateAnonymousSignIn(auth)
+      .catch((error: any) => {
+        toast({
+          variant: "destructive",
+          title: "Guest Entry Failed",
+          description: "Anonymous sign-in is currently unavailable."
+        })
+        setIsLoading(false)
       })
-      setIsLoading(false)
-    }
   }
 
   return (
