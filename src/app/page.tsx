@@ -238,7 +238,7 @@ export default function Home() {
               <div className="p-2.5 rounded-2xl bg-primary text-white shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform">
                 <HeartPulse size={24} />
               </div>
-              <span className="text-2xl font-black text-primary tracking-tight">HealthWise</span>
+              <span className="text-2xl font-black text-primary tracking-tight group-hover:text-accent transition-colors">HealthWise</span>
             </Link>
             <p className="text-base text-muted-foreground leading-relaxed font-medium italic">
               Empowering India with the world's most accessible, hyper-personalized digital healthcare ecosystem.
@@ -273,7 +273,7 @@ export default function Home() {
           </div>
         </div>
         <div className="container mx-auto px-4 mt-20 pt-10 border-t text-center text-xs font-black text-muted-foreground/40 uppercase tracking-[0.2em]">
-          © 2024 HealthWise Pan-India. Dedicated to a Healthier Bharat.
+          © 2026 HealthWise Pan-India. Dedicated to a Healthier Bharat.
         </div>
       </footer>
     </div>
