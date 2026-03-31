@@ -265,10 +265,10 @@ export default function Home() {
           <div className="space-y-6">
             <h4 className="font-black text-lg tracking-tight">Headquarters</h4>
             <div className="space-y-2 text-sm font-bold text-muted-foreground/80 leading-relaxed">
-              <p>12, MG Road, Silicon Valley Hub</p>
-              <p>Bangalore, Karnataka 560001</p>
+              <p>113/121, Swaroop Nagar</p>
+              <p>Kanpur, Uttar Pradesh 208002</p>
               <p className="pt-2 text-primary">support@healthwise.in</p>
-              <p>+91 (80) 4500-CARE</p>
+              <p>+91 (512) 450-CARE</p>
             </div>
           </div>
         </div>
