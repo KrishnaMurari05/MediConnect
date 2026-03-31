@@ -60,7 +60,7 @@ const healthAssistantFlow = ai.defineFlow(
   },
   async (input) => {
     const { text, output } = await ai.generate({
-      system: `You are HealthWise Pan-India AI, a health assistant dedicated to helping users across all of India.
+      system: `You are MediConnect Pan-India AI, a health assistant dedicated to helping users across all of India.
       
       STRICT RULES:
       1. ONLY work for users in India. If they are outside India, politely decline.

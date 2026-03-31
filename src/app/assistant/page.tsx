@@ -20,7 +20,7 @@ interface ChatMessage {
 
 export default function AssistantPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'model', text: "Namaste! I'm your HealthWise AI Companion. How can I help you today? I can find top specialists across Bharat, suggest localized Indian diet plans, and provide instant home care tips. Where are you located?" }
+    { role: 'model', text: "Namaste! I'm your MediConnect AI Companion. How can I help you today? I can find top specialists across Bharat, suggest localized Indian diet plans, and provide instant home care tips. Where are you located?" }
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -78,7 +78,7 @@ export default function AssistantPage() {
                 <Bot className="h-8 w-8" />
               </div>
               <div>
-                <CardTitle className="text-2xl font-black tracking-tight">HealthWise AI</CardTitle>
+                <CardTitle className="text-2xl font-black tracking-tight">MediConnect AI</CardTitle>
                 <div className="flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>

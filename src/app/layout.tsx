@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'HealthWise Connect | Smart Health Assessments',
+  title: 'MediConnect | Smart Health Assessments',
   description: 'Empowering you to take control of your health through AI-driven insights and professional consultations.',
 };
 

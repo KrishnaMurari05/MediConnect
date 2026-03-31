@@ -54,7 +54,7 @@ export default function DoctorsPage() {
           <div className="flex flex-col md:flex-row justify-between items-end gap-6">
             <div className="space-y-2">
               <h1 className="text-4xl font-extrabold tracking-tight">Our Network of Doctors</h1>
-              <p className="text-muted-foreground text-lg">Choose from top-rated professionals verified by HealthWise.</p>
+              <p className="text-muted-foreground text-lg">Choose from top-rated professionals verified by MediConnect.</p>
             </div>
             <div className="w-full md:w-96 flex gap-2">
               <div className="relative flex-1">

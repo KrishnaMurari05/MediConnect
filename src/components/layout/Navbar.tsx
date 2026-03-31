@@ -57,7 +57,7 @@ export default function Navbar() {
                 <HeartPulse fill="white" size={24} />
               </div>
               <span className="text-2xl font-black text-primary tracking-tight leading-none group-hover:text-accent transition-colors">
-                HealthWise
+                MediConnect
               </span>
             </Link>
           </div>

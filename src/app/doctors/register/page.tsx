@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from 'react'
@@ -309,7 +308,7 @@ export default function DoctorRegistrationPage() {
                   </div>
                   <div className="space-y-2">
                     <h3 className="text-2xl font-black">Ready for Verification</h3>
-                    <p className="text-muted-foreground">By submitting, you authorize HealthWise to verify your medical license with the national registry.</p>
+                    <p className="text-muted-foreground">By submitting, you authorize MediConnect to verify your medical license with the national registry.</p>
                   </div>
                   <div className="text-left bg-muted/50 p-6 rounded-2xl space-y-3 border">
                     <div className="flex justify-between"><span className="text-muted-foreground text-sm">Name:</span> <span className="font-bold">{formData.name}</span></div>

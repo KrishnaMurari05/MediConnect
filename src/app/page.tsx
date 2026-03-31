@@ -79,7 +79,7 @@ export default function Home() {
                           </div>
                           <div>
                              <div className="text-white font-black text-xl">10k+ Indians</div>
-                             <div className="text-white/80 text-sm font-bold">Trust HealthWise Every Day</div>
+                             <div className="text-white/80 text-sm font-bold">Trust MediConnect Every Day</div>
                           </div>
                        </div>
                     </div>
@@ -215,7 +215,7 @@ export default function Home() {
               </p>
               <div className="pt-6 flex flex-col sm:flex-row gap-6">
                 <Button size="lg" variant="secondary" className="h-16 px-12 text-xl rounded-full font-black shadow-2xl transition-all hover:translate-y-[-4px] active:scale-95 bg-white text-primary hover:bg-white/90">
-                  Join HealthWise Free
+                  Join MediConnect Free
                 </Button>
                 <div className="flex -space-x-3 items-center">
                   {[1,2,3,4].map(i => (
@@ -238,7 +238,7 @@ export default function Home() {
               <div className="p-2.5 rounded-2xl bg-primary text-white shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform">
                 <HeartPulse size={24} />
               </div>
-              <span className="text-2xl font-black text-primary tracking-tight group-hover:text-accent transition-colors">HealthWise</span>
+              <span className="text-2xl font-black text-primary tracking-tight group-hover:text-accent transition-colors">MediConnect</span>
             </Link>
             <p className="text-base text-muted-foreground leading-relaxed font-medium italic">
               Empowering India with the world's most accessible, hyper-personalized digital healthcare ecosystem.
@@ -267,13 +267,13 @@ export default function Home() {
             <div className="space-y-2 text-sm font-bold text-muted-foreground/80 leading-relaxed">
               <p>113/121, Swaroop Nagar</p>
               <p>Kanpur, Uttar Pradesh 208002</p>
-              <p className="pt-2 text-primary">support@healthwise.in</p>
+              <p className="pt-2 text-primary">support@mediconnect.in</p>
               <p>+91 (512) 450-CARE</p>
             </div>
           </div>
         </div>
         <div className="container mx-auto px-4 mt-20 pt-10 border-t text-center text-xs font-black text-muted-foreground/40 uppercase tracking-[0.2em]">
-          © 2026 HealthWise Pan-India. Dedicated to a Healthier Bharat.
+          © 2026 MediConnect Pan-India. Dedicated to a Healthier Bharat.
         </div>
       </footer>
     </div>

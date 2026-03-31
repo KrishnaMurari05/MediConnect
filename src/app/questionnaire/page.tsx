@@ -183,7 +183,7 @@ export default function QuestionnairePage() {
             </div>
             <div className="space-y-3">
               <h2 className="text-3xl font-black tracking-tight">Login Required</h2>
-              <p className="text-muted-foreground font-medium text-lg leading-relaxed">Please sign in to your HealthWise account to start your personalized clinical assessment.</p>
+              <p className="text-muted-foreground font-medium text-lg leading-relaxed">Please sign in to your MediConnect account to start your personalized clinical assessment.</p>
             </div>
             <Button asChild size="lg" className="w-full h-14 rounded-full font-black text-lg shadow-xl shadow-primary/20 hover:translate-y-[-2px] transition-all">
               <Link href="/login">Sign In to Continue</Link>

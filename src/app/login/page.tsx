@@ -84,7 +84,7 @@ export default function LoginPage() {
             <div className="mx-auto h-16 w-16 bg-primary text-white rounded-2xl flex items-center justify-center shadow-2xl shadow-primary/20 floating">
               <HeartPulse size={32} fill="white" />
             </div>
-            <h1 className="text-4xl font-black tracking-tight">Access HealthWise</h1>
+            <h1 className="text-4xl font-black tracking-tight">Access MediConnect</h1>
             <p className="text-muted-foreground font-medium">Join 10k+ Indians on their health journey.</p>
           </div>
 
@@ -110,7 +110,7 @@ export default function LoginPage() {
                           <Input 
                             id="email" 
                             type="email" 
-                            placeholder="arjun@healthwise.in" 
+                            placeholder="arjun@mediconnect.in" 
                             className="h-14 pl-12 rounded-2xl border-primary/5 bg-muted/20 focus:bg-white transition-all text-base font-medium" 
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -148,7 +148,7 @@ export default function LoginPage() {
                         <Input 
                           id="signup-email" 
                           type="email" 
-                          placeholder="arjun@healthwise.in" 
+                          placeholder="arjun@mediconnect.in" 
                           className="h-14 rounded-2xl border-primary/5 bg-muted/20 focus:bg-white transition-all text-base font-medium" 
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
