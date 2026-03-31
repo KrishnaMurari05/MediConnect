@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import Navbar from '@/components/layout/Navbar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -11,9 +12,10 @@ import { Progress } from '@/components/ui/progress'
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
-import { ChevronRight, ChevronLeft, Loader2, CheckCircle2, AlertTriangle, Activity, Sparkles, Heart, ShieldCheck, Pill, Stethoscope, Home, Utensils } from 'lucide-react'
+import { ChevronRight, ChevronLeft, Loader2, CheckCircle2, AlertTriangle, Activity, Sparkles, Heart, ShieldCheck, Pill, Stethoscope, Home, Utensils, Lock } from 'lucide-react'
 import { personalizedHealthInsights, PersonalizedHealthInsightsOutput } from '@/ai/flows/personalized-health-insights'
 import { Badge } from '@/components/ui/badge'
+import { useUser } from '@/firebase'
 
 const TRANSLATIONS = {
   en: {
@@ -100,6 +102,7 @@ const TRANSLATIONS = {
 
 export default function QuestionnairePage() {
   const router = useRouter()
+  const { user, isUserLoading } = useUser()
   const [step, setStep] = useState(1)
   const [language, setLanguage] = useState<'en' | 'hi'>('en')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -156,6 +159,42 @@ export default function QuestionnairePage() {
   const handlePrepareDiet = () => {
     const prompt = `Based on my recent assessment (Age: ${formData.age}, BMI: ${bmi}, Diet: ${formData.diet}, Activity: ${formData.exerciseLevel}), please prepare a detailed Indian diet plan for me.`
     router.push(`/assistant?prompt=${encodeURIComponent(prompt)}`)
+  }
+
+  if (isUserLoading) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <Navbar />
+        <div className="flex-1 flex items-center justify-center">
+          <Loader2 className="h-12 w-12 animate-spin text-primary" />
+        </div>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <Navbar />
+        <main className="flex-1 flex items-center justify-center p-4">
+          <Card className="max-w-md w-full border-none shadow-3xl text-center p-12 space-y-8 rounded-[3rem] bg-white/70 backdrop-blur-xl animate-in fade-in zoom-in-95 duration-700">
+            <div className="mx-auto h-20 w-20 bg-primary/10 rounded-3xl flex items-center justify-center text-primary floating">
+              <Lock size={40} />
+            </div>
+            <div className="space-y-3">
+              <h2 className="text-3xl font-black tracking-tight">Login Required</h2>
+              <p className="text-muted-foreground font-medium text-lg leading-relaxed">Please sign in to your HealthWise account to start your personalized clinical assessment.</p>
+            </div>
+            <Button asChild size="lg" className="w-full h-14 rounded-full font-black text-lg shadow-xl shadow-primary/20 hover:translate-y-[-2px] transition-all">
+              <Link href="/login">Sign In to Continue</Link>
+            </Button>
+            <div className="flex items-center justify-center gap-3 pt-4 text-[10px] text-muted-foreground font-black uppercase tracking-[0.2em]">
+               <ShieldCheck size={14} /> Clinical Grade Data Authorization
+            </div>
+          </Card>
+        </main>
+      </div>
+    )
   }
 
   if (result) {
@@ -241,7 +280,6 @@ export default function QuestionnairePage() {
               </Card>
             </div>
 
-            {/* New Sections: Therapy and Medication */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <Card className="border-none shadow-2xl rounded-[3rem] bg-white interactive-card">
                 <CardHeader className="p-8 border-b border-muted">
@@ -287,7 +325,6 @@ export default function QuestionnairePage() {
               </CardContent>
             </Card>
 
-            {/* Diet Preparation CTA */}
             <Card className="border-none bg-gradient-to-br from-primary to-accent text-white rounded-[3rem] p-8 md:p-12 shadow-3xl relative overflow-hidden group">
               <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-white/10 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700" />
               <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
