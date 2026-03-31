@@ -26,12 +26,12 @@ export default function LoginPage() {
     setIsLoading(true)
     try {
       initiateEmailSignIn(auth, email, password)
-      // Redirection handled by onAuthStateChanged in Provider/Navbar
+      // Note: Redirection is handled by the onAuthStateChanged listener in the FirebaseProvider/Navbar
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Auth Error",
-        description: error.message
+        title: "Authentication Failed",
+        description: error.message || "Please check your credentials and try again."
       })
     } finally {
       setIsLoading(false)
@@ -46,8 +46,8 @@ export default function LoginPage() {
     } catch (error: any) {
       toast({
         variant: "destructive",
-        title: "Auth Error",
-        description: error.message
+        title: "Registration Failed",
+        description: error.message || "Could not create account. Please try a different email."
       })
     } finally {
       setIsLoading(false)
@@ -55,14 +55,24 @@ export default function LoginPage() {
   }
 
   const handleGuestEntry = () => {
-    initiateAnonymousSignIn(auth)
+    setIsLoading(true)
+    try {
+      initiateAnonymousSignIn(auth)
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Guest Entry Failed",
+        description: "Anonymous sign-in is currently unavailable."
+      })
+      setIsLoading(false)
+    }
   }
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       <main className="flex-1 flex items-center justify-center p-4 relative overflow-hidden py-24">
-        {/* Background Accents */}
+        {/* Background Decorative Accents */}
         <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-[100px] animate-pulse" />
         <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-accent/10 rounded-full blur-[100px] animate-pulse delay-700" />
 
@@ -71,15 +81,19 @@ export default function LoginPage() {
             <div className="mx-auto h-16 w-16 bg-primary text-white rounded-2xl flex items-center justify-center shadow-2xl shadow-primary/20 floating">
               <HeartPulse size={32} fill="white" />
             </div>
-            <h1 className="text-4xl font-black tracking-tight">Welcome to HealthWise</h1>
-            <p className="text-muted-foreground font-medium">Your gateway to a healthier Bharat.</p>
+            <h1 className="text-4xl font-black tracking-tight">Access HealthWise</h1>
+            <p className="text-muted-foreground font-medium">Join 10k+ Indians on their health journey.</p>
           </div>
 
-          <Card className="border-none shadow-3xl rounded-[2.5rem] overflow-hidden bg-white">
+          <Card className="border-none shadow-3xl rounded-[2.5rem] overflow-hidden bg-white/70 backdrop-blur-xl border border-white/20">
             <Tabs defaultValue="login" className="w-full">
               <TabsList className="grid w-full grid-cols-2 rounded-none h-14 bg-muted/30 p-1">
-                <TabsTrigger value="login" className="rounded-[1.5rem] data-[state=active]:shadow-lg font-black text-xs uppercase tracking-widest">Login</TabsTrigger>
-                <TabsTrigger value="signup" className="rounded-[1.5rem] data-[state=active]:shadow-lg font-black text-xs uppercase tracking-widest">Sign Up</TabsTrigger>
+                <TabsTrigger value="login" className="rounded-[1.5rem] data-[state=active]:shadow-lg font-black text-xs uppercase tracking-widest transition-all">
+                  Sign In
+                </TabsTrigger>
+                <TabsTrigger value="signup" className="rounded-[1.5rem] data-[state=active]:shadow-lg font-black text-xs uppercase tracking-widest transition-all">
+                  Register
+                </TabsTrigger>
               </TabsList>
 
               <CardContent className="p-8 space-y-6">
@@ -87,14 +101,14 @@ export default function LoginPage() {
                   <form onSubmit={handleSignIn} className="space-y-6">
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="email" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Email Address</Label>
+                        <Label htmlFor="email" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground ml-1">Email Address</Label>
                         <div className="relative">
                           <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                           <Input 
                             id="email" 
                             type="email" 
                             placeholder="arjun@healthwise.in" 
-                            className="h-14 pl-12 rounded-2xl border-primary/5 bg-muted/20 focus:bg-white" 
+                            className="h-14 pl-12 rounded-2xl border-primary/5 bg-muted/20 focus:bg-white transition-all text-base font-medium" 
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
@@ -102,14 +116,14 @@ export default function LoginPage() {
                         </div>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="password" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Password</Label>
+                        <Label htmlFor="password" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground ml-1">Password</Label>
                         <div className="relative">
                           <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                           <Input 
                             id="password" 
                             type="password" 
                             placeholder="••••••••" 
-                            className="h-14 pl-12 rounded-2xl border-primary/5 bg-muted/20 focus:bg-white" 
+                            className="h-14 pl-12 rounded-2xl border-primary/5 bg-muted/20 focus:bg-white transition-all text-base font-medium" 
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
@@ -117,8 +131,8 @@ export default function LoginPage() {
                         </div>
                       </div>
                     </div>
-                    <Button type="submit" className="w-full h-14 rounded-full font-black text-lg shadow-xl shadow-primary/20" disabled={isLoading}>
-                      {isLoading ? <Loader2 className="animate-spin" /> : "Access Portal"}
+                    <Button type="submit" className="w-full h-14 rounded-full font-black text-lg shadow-xl shadow-primary/20 hover:translate-y-[-2px] active:scale-95 transition-all" disabled={isLoading}>
+                      {isLoading ? <Loader2 className="animate-spin h-6 w-6" /> : "Sign In to Portal"}
                     </Button>
                   </form>
                 </TabsContent>
@@ -127,55 +141,60 @@ export default function LoginPage() {
                   <form onSubmit={handleSignUp} className="space-y-6">
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="signup-email" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Email Address</Label>
+                        <Label htmlFor="signup-email" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground ml-1">Email Address</Label>
                         <Input 
                           id="signup-email" 
                           type="email" 
                           placeholder="arjun@healthwise.in" 
-                          className="h-14 rounded-2xl border-primary/5 bg-muted/20 focus:bg-white" 
+                          className="h-14 rounded-2xl border-primary/5 bg-muted/20 focus:bg-white transition-all text-base font-medium" 
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           required
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="signup-password" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground">Choose Password</Label>
+                        <Label htmlFor="signup-password" className="font-black text-[10px] uppercase tracking-widest text-muted-foreground ml-1">Create Password</Label>
                         <Input 
                           id="signup-password" 
                           type="password" 
                           placeholder="Min. 8 characters" 
-                          className="h-14 rounded-2xl border-primary/5 bg-muted/20 focus:bg-white" 
+                          className="h-14 rounded-2xl border-primary/5 bg-muted/20 focus:bg-white transition-all text-base font-medium" 
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           required
                         />
                       </div>
                     </div>
-                    <Button type="submit" className="w-full h-14 rounded-full font-black text-lg shadow-xl shadow-primary/20" disabled={isLoading}>
-                      {isLoading ? <Loader2 className="animate-spin" /> : "Create Account"}
+                    <Button type="submit" className="w-full h-14 rounded-full font-black text-lg shadow-xl shadow-primary/20 hover:translate-y-[-2px] active:scale-95 transition-all" disabled={isLoading}>
+                      {isLoading ? <Loader2 className="animate-spin h-6 w-6" /> : "Create Account"}
                     </Button>
                   </form>
                 </TabsContent>
 
                 <div className="relative">
-                  <div className="absolute inset-0 flex items-center"><span className="w-full border-t" /></div>
-                  <div className="relative flex justify-center text-xs uppercase"><span className="bg-white px-2 text-muted-foreground font-bold">Or</span></div>
+                  <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-muted" /></div>
+                  <div className="relative flex justify-center text-xs uppercase"><span className="bg-white/80 px-4 text-muted-foreground font-black tracking-widest">Or</span></div>
                 </div>
 
                 <Button 
                   variant="outline" 
-                  className="w-full h-14 rounded-full font-bold border-primary/10 hover:bg-primary/5"
+                  className="w-full h-14 rounded-full font-bold border-primary/10 hover:bg-primary/5 transition-all"
                   onClick={handleGuestEntry}
                   disabled={isLoading}
                 >
                   <Sparkles size={18} className="mr-2 text-accent" /> Continue as Guest
                 </Button>
               </CardContent>
-              <CardFooter className="bg-muted/10 p-6 text-center text-[10px] text-muted-foreground font-bold uppercase tracking-widest">
-                <ShieldCheck className="inline-block mr-2 h-3 w-3" /> Secure Health Cloud Authorization
+              <CardFooter className="bg-muted/10 p-6 text-center text-[10px] text-muted-foreground font-black uppercase tracking-[0.2em] flex justify-center items-center gap-2">
+                <ShieldCheck size={14} className="text-primary" /> 
+                Clinical Grade Data Authorization
               </CardFooter>
             </Tabs>
           </Card>
+          
+          <p className="text-center text-xs text-muted-foreground font-medium px-8">
+            By signing in, you agree to our <span className="text-primary font-bold cursor-pointer hover:underline">Privacy Policy</span> and <span className="text-primary font-bold cursor-pointer hover:underline">Clinical Terms</span>.
+          </p>
         </div>
       </main>
     </div>
